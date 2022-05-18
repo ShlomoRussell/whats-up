@@ -1,12 +1,13 @@
 
 class MessageModel{
-
-    from;    
-    to;
+    id; // uuid
+    from;    // user id
+    to;      // user id
     textContent; 
     time;   
 
     constructor(from, to, textContent){
+        this.id = id;
         this.from = from;
         this.to = to;
         this.textContent = textContent;
