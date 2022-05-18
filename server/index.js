@@ -1,12 +1,16 @@
-const express = require('express');
+const express = require("express");
+
 const app = express();
-const dotenv = require('dotenv');
-dotenv.config();
+const webSocket = require('./web-socket');
+const dotenv = require("dotenv").config();
+
+
 const PORT = process.env.PORT;
 
 
+app.use("/", express.static("public"));
 
-
-app.use('/', express.static('public'));
-
-app.listen(PORT,()=>console.log(`server started on port ${PORT}`));
+const server = app.listen(PORT, () =>
+  console.log(`server started on port ${PORT}`)
+);
+webSocket(server)
