@@ -6,7 +6,7 @@ class MessageModel{
     textContent; 
     time;   
 
-    constructor(from, to, textContent){
+    constructor(id, from, to, textContent){
         this.id = id;
         this.from = from;
         this.to = to;
