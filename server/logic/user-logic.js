@@ -8,14 +8,6 @@ const getUserByIdAsync = async id => {
     return user; 
 };
 
-const createUserAsync = async user => {
-    const users = await dal.getAllUsersAsync();
-    const isntValidName = users.find(u => u.username === user.username);
-    if(isntValidName) return null;
-    await dal.saveAllUsersAsync([...users, user]);
-    return user;
-};
-
 const updateUserAsync = async (userId, changedParams) => {
     const users = await dal.getAllUsersAsync();
     const idx = users.findIndex(u => u.id === userId);
@@ -32,7 +24,6 @@ const deleteUserAsync = id => dal.getAllUsersAsync()
 module.exports = {
     getAllUsersAsync,
     getUserByIdAsync,
-    createUserAsync,
     updateUserAsync,
     deleteUserAsync
 }
