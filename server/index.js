@@ -13,7 +13,7 @@ const errorHandler = require("./middleware/error-handler");
 const ErrorModel = require("./models/error-model");
 const apiCtrl = require("./controllers/api-controller");
 
-
+const authctrl = require("./controllers/auth-controller");
 require("dotenv").config();
 
 app.use('/',express.static('../client'))
@@ -24,6 +24,8 @@ const PORT = process.env.PORT;
 
 
 app.use("/api/users", apiCtrl);
+app.use('/api/users', apiCtrl);
+app.use('/auth', authctrl);
 
 // for non existing routes or url type error
 app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));

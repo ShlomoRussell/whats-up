@@ -7,3 +7,5 @@
 * `ws` -- WebSocket library
 * `query-string` -- for parsing url params
 * `dotenv` 
+* `jsonwebtoken` 
+* `uuid` 
