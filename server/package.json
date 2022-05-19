@@ -16,7 +16,6 @@
     "jsonwebtoken": "^8.5.1",
     "query-string": "^7.1.1",
     "socket.io": "^4.5.1",
-    "uuid": "^8.3.2",
-    "ws": "^8.6.0"
+    "uuid": "^8.3.2"
   }
 }

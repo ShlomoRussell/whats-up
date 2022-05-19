@@ -2,10 +2,14 @@
 
 * remember to use the `cd server` command before executing the code or adding anything to the node modules
 
-## Dependencies 
+## Server Dependencies 
 * `ExpressJs`
-* `ws` -- WebSocket library
+* `socket.io` -- WebSocket library
 * `query-string` -- for parsing url params
 * `dotenv` 
 * `jsonwebtoken` 
 * `uuid` 
+
+## Client Dependencies 
+* `React`
+* `socket.io-client`
