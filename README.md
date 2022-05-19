@@ -4,7 +4,7 @@
 
 ## Dependencies 
 * `ExpressJs`
-* `ws` -- WebSocket library
+* `socket.io` -- WebSocket library
 * `query-string` -- for parsing url params
 * `dotenv` 
 * `jsonwebtoken` 
