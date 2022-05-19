@@ -24,7 +24,6 @@ const PORT = process.env.PORT;
 
 
 app.use("/api/users", apiCtrl);
-app.use('/api/users', apiCtrl);
 app.use('/auth', authctrl);
 
 // for non existing routes or url type error
