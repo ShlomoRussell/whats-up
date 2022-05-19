@@ -2,10 +2,10 @@ const uuid = require('uuid').v4;
 
 class UserModel{
 
-    constructor( username, password){
+    constructor(user){
         this.id = uuid(); 
-        this.username = username;
-        this.password = password;
+        this.username = user.username;
+        this.password = user.password;
         this.unreadMessages = [];
     }
 }
