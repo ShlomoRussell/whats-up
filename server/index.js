@@ -10,9 +10,7 @@ const app = express();
 
 const server = require("http").createServer(app);
 const { Server } = require("socket.io"); 
-const io = new Server(server, {
-  cors:'localhost:3000'
-})
+const io = new Server(server, { cors:'localhost:3000' })
 
 io.on("connection", (socket) => {
   socket.on('send-message', (message) => {
