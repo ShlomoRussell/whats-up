@@ -10,7 +10,10 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   socket.on('send-message', (message) => {
     console.log(message)
-    socket.emit('receive-message',message)
+    socket.emit(
+      "receive-message",
+      `Thank you for sending you messsage of "${message}",\n we will get back to you soon 😀`
+    );
   })
  
   console.log(`You're connect with the id:${socket.id}`);
