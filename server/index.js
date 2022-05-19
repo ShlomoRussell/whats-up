@@ -3,9 +3,16 @@ const app = express();
 
 const server = require("http").createServer(app);
 const { Server } = require("socket.io"); 
-const io = new Server(server)
+const io = new Server(server, {
+  cors:'localhost:3000'
+})
 
 io.on("connection", (socket) => {
+  socket.on('send-message', (message) => {
+    console.log(message)
+    socket.emit('receive-message',message)
+  })
+ 
   console.log(`You're connect with the id:${socket.id}`);
 });
 
@@ -16,11 +23,11 @@ const apiCtrl = require("./controllers/api-controller");
 const authctrl = require("./controllers/auth-controller");
 require("dotenv").config();
 
-app.use('/',express.static('../client'))
+//app.use('/',express.static('../client'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5782
 
 
 app.use("/api/users", apiCtrl);
@@ -31,4 +38,4 @@ app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
 
 
-server.listen(PORT, () => console.log(`server started on port ${PORT}`));
+server.listen(PORT, () => console.log(`server started on port: ${PORT}`));
