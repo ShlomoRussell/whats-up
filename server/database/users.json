@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
+        "username": "Shlomo Russel",
+        "password": 1234,
+        "unreadMessages": []
+    },
+    {
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "username": "Amit Licht",
+        "password": 1212,
+        "unreadMessages": []
+    },
+    {
+        "id": "82a93d6d-6181-4763-ac90-177cd05c39b7",
+        "username": "Amit Engel",
+        "password": 3426,
+        "unreadMessages": []
+    },
+    {
+        "id": "b1e3d9c2-f08a-4293-a2d6-9f0dff6272a5",
+        "username": "Yaakov Hatam",
+        "password": 8989,
+        "unreadMessages": []
+    }
+]
