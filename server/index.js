@@ -12,23 +12,21 @@ const server = require("http").createServer(app);
 const { Server } = require("socket.io"); 
 const io = new Server(server, { cors:'localhost:3000' })
 
-io.on("connection", (socket) => {
-  socket.on('send-message', (message) => {
-    console.log(message)
-    socket.emit(
-      "receive-message",
-      `Thank you for sending you messsage of "${message}",\n we will get back to you soon 😀`
-    );
-  })
- 
-  console.log(`You're connect with the id:${socket.id}`);
-});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
 app.use("/api/users", apiCtrl);
 app.use('/auth', authctrl);
+io.on("connection", (socket) => {
+  socket.on("send-message", (sendToID, message) => {
+    console.log(message);
+    socket.to(sendToID).emit("receive-message", message);
+  });
+
+  console.log(`You're connect with the id:${socket.id}`);
+});
+
 app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
 
