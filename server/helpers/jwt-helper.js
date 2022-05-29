@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-
-const secretKey = "Shlomo-and-Amit-Whatsup-app";
+require('dotenv').config()
+const secretKey = process.env.JWT_SECRET_KEY;
 
 function getNewToken(user){
     const payload = { user };
