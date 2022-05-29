@@ -39,6 +39,11 @@ app.use(function (req, res, next) {
   }
 });
 app.use("/api/users", apiCtrl);
+;
+
+app.get('*', function(req, res) {
+    res.sendFile(__dirname + '/server/static/index.html');
+});
 
 app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
@@ -50,7 +55,6 @@ const wrap = (middleware) => (socket, next) =>
 
 io.use(wrap(sessionMiddleware));
 io.use(function (socket, next) {
-  console.log('hello')
   try {
     const token = socket.handshake.auth.token;
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -64,7 +68,7 @@ io.use(function (socket, next) {
 io.on("connection", (socket) => {
   socket.on("send-message", (sendToID, message) => {
     console.log(message);
-    socket.emit("receive-message", message);
+    socket.to(sendToID).emit("receive-message", message);
   });
 
   console.log(`You're connect with the id:${socket.id}`);
