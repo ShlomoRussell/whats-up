@@ -4,6 +4,7 @@ import { SocketProvider } from "./context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
 import {  RequireAuth, useAuth } from "./context/AuthContext";
 import Chat from "./components/Chat";
+import { ConversationsProvider } from "./context/ConversationsProvider";
 
 function App() {
   const { user } = useAuth();
@@ -15,7 +16,9 @@ function App() {
         element={
           <RequireAuth>
             <SocketProvider>
-              <Chat />
+              <ConversationsProvider>
+                <Chat />
+              </ConversationsProvider>
             </SocketProvider>
           </RequireAuth>
         }
