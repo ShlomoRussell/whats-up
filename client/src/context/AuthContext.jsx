@@ -1,4 +1,5 @@
-import React,{ createContext,useContext,useNavigate,useLocation, useState,Navigate } from "react";
+import React, { createContext, useContext, useState, } from "react";
+import { useNavigate,useLocation,Navigate } from "react-router-dom";
 import authentication from '../helpers/login.helper'
 let AuthContext = createContext(null);
 
@@ -7,7 +8,7 @@ export function AuthProvider({ children }) {
 
   let signin = (newUser, callback) => {
     return authentication.signIn(newUser,() => {
-      setUser(newUser.username);
+      setUser(newUser);
       callback();
     });
   };
@@ -30,6 +31,7 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
+
 export function AuthStatus() {
   let auth = useAuth();
   let navigate = useNavigate();

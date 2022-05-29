@@ -1,21 +1,21 @@
 import React, { createRef } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 function Login() {
   const emailRef = createRef();
   const passwordRef = createRef();
 
   let navigate = useNavigate();
-  let location = useLocation();
+  let location = useLocation()
 
   let auth = useAuth();
 
-  let from = location.state?.from?.pathname || "/";
+  let from = location.state|| "/";
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
+    
     e.preventDefault();
-
     auth.signin(
       { username: emailRef.current.value, password: passwordRef.current.value },
       () => {

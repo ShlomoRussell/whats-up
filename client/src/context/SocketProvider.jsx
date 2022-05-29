@@ -8,20 +8,22 @@ export const SocketContext = createContext();
 
 
 
-export function SocketProvider({ children }) {
+export function SocketProvider({id, children }) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-      const newSocket = io("http://localhost:5782", {
-        path: "/socket.io",
-        transports: ["websocket"],
-        secure: true,
-        auth: {
-          token: authentication.token,
-        },
-      });
+    const newSocket = io("http://localhost:5782", {
+      path: "/socket.io",
+      transports: ["websocket"],
+      secure: true,
+      auth: {
+        token: authentication.token,
+      },
+    });
+
       setSocket(newSocket);
-      console.log(socket)
+
+    
     return () => newSocket.close();
   }, [authentication.loggedIn]);
     
