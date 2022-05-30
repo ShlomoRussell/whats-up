@@ -6,7 +6,7 @@ auth.post("/register", async (req, res, next) => {
   try {
     const token = await registerUser(req.body);
     if (!token) throw new ErrorModel(404, "username already exist");
-    res.status(201).json(token);
+    res.status(201).json({token:token,loggedIn:true});
   } catch (err) {
     next(err);
   }

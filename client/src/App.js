@@ -5,12 +5,14 @@ import { Routes, Route } from "react-router-dom";
 import {  RequireAuth, useAuth } from "./context/AuthContext";
 import { ConversationsProvider } from "./context/ConversationsProvider";
 import MessageInput from "./components/MessageInput";
+import Register from "./components/Register";
 
 function App() {
   const { user } = useAuth();
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/"
         element={

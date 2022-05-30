@@ -28,5 +28,35 @@
         "username": "Amitoush",
         "password": 4444,
         "unreadMessages": []
+    },
+    {
+        "id": "044e53a6-fc96-4672-8e4f-43b89cba5c8e",
+        "username": "chana",
+        "password": "5678",
+        "unreadMessages": []
+    },
+    {
+        "id": "4d335069-186c-4b3c-bef2-81cb3a09445b",
+        "username": "",
+        "password": "aaaa",
+        "unreadMessages": []
+    },
+    {
+        "id": "b763e8fc-dc64-44de-957c-d8e202495f90",
+        "username": "dude",
+        "password": "bbbb",
+        "unreadMessages": []
+    },
+    {
+        "id": "b45700a5-376c-4535-8362-a452a2aac5cf",
+        "username": "me",
+        "password": "bbbb",
+        "unreadMessages": []
+    },
+    {
+        "id": "9d8e0842-2e8c-4d2b-b27d-c18b02cbe7dd",
+        "username": "baby",
+        "password": "mmmm",
+        "unreadMessages": []
     }
 ]

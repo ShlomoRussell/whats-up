@@ -18,9 +18,15 @@ export function AuthProvider({ children }) {
       callback();
     });
   };*/
-
+let signup = (newUser, callback) => {
+  return authentication.register(newUser, () => {
+    setUser(newUser);
+    callback();
+  });
+};
   let value = {
     user,
+    signup,
     signin,
     //signout,
   };
