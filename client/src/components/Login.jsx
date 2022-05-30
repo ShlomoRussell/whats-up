@@ -2,22 +2,25 @@ import React, { createRef } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+
 function Login() {
-  const emailRef = createRef();
+  const usernameRef = createRef();
   const passwordRef = createRef();
 
   let navigate = useNavigate();
-  let location = useLocation()
+  let location = useLocation();
 
   let auth = useAuth();
 
-  let from = location.state|| "/";
+  let from = location.state ? location.state.from.pathname : "/";
 
   const handleSubmit = (e) => {
-    
     e.preventDefault();
     auth.signin(
-      { username: emailRef.current.value, password: passwordRef.current.value },
+      {
+        username: usernameRef.current.value,
+        password: passwordRef.current.value,
+      },
       () => {
         navigate(from, { replace: true });
       }
@@ -27,10 +30,14 @@ function Login() {
   return (
     <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
+        <Form.Label>Username</Form.Label>
+        <Form.Control
+          ref={usernameRef}
+          type="text"
+          placeholder="Enter username"
+        />
         <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
+          We'll never share your information with anyone else.
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
