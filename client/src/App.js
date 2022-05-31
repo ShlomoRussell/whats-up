@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "./components/Login";
 import { SocketProvider } from "./context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
-import {  RequireAuth, useAuth } from "./context/AuthContext";
+import {  RequireAuth } from "./context/AuthContext";
 import { ConversationsProvider } from "./context/ConversationsProvider";
 import MessageInput from "./components/MessageInput";
 import Register from "./components/Register";
 
 function App() {
-  const { user } = useAuth();
+const [id,setId]=useState(null)
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login onSubmitId={setId} />} />
       <Route path="/register" element={<Register />} />
       <Route
         path="/"
         element={
           <RequireAuth>
-            <SocketProvider>
+            <SocketProvider id={id}>
               <ConversationsProvider>
                 <MessageInput />
               </ConversationsProvider>
