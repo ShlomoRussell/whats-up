@@ -2,9 +2,11 @@ const dal = require('../DAL/dal');
 
 const getAllUsersAsync = async () => dal.getAllUsersAsync();
 
-const getUserByIdAsync = async id => {
-    const user = await dal.getAllUsersAsync().then(res => res.find(u => u.id === id));
-    if(!user) return null;
+const getUserByUsernameAsync = async username => {
+    const user = await dal
+      .getAllUsersAsync()
+      .then((res) => res.find((u) => u.username === username));
+    if (!user) return null;
     return user; 
 };
 
@@ -23,7 +25,7 @@ const deleteUserAsync = id => dal.getAllUsersAsync()
 
 module.exports = {
     getAllUsersAsync,
-    getUserByIdAsync,
+    getUserByUsernameAsync,
     updateUserAsync,
     deleteUserAsync
 }
