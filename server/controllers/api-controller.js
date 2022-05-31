@@ -8,9 +8,10 @@ apiCtrl.get('/', async (req,res,next)=> {
     res.json(users);
 });
 
-apiCtrl.get('/:id', async (req,res,next)=> {
-    const id = req.params.id;
-    const user = await logic.getUserByIdAsync(id);
+apiCtrl.get('/:username', async (req,res,next)=> {
+    const username = req.params.username;
+    console.log(username)
+    const user = await logic.getUserByIdAsync(username);
     if(!user) return next(new ErrorModel(404, 'id not found'));
     res.json(user);
 });
