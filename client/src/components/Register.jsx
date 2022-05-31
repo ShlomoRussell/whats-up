@@ -31,7 +31,7 @@ function Register() {
     }
   };
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" ref={emailRef} placeholder="Enter email" />
@@ -59,7 +59,7 @@ function Register() {
         <Form.Label>Confirm Password</Form.Label>
         <Form.Control ref={confirmRef} type="password" placeholder="Password" />
       </Form.Group>
-      <Button variant="primary" onClick={(e) => handleSubmit(e)} type="submit">
+      <Button variant="primary" type="submit">
         Sign Up
       </Button>
     </Form>
