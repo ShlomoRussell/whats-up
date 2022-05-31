@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, } from "react";
 import { useNavigate,useLocation,Navigate } from "react-router-dom";
 import authentication from '../helpers/login.helper'
+
+
+
 let AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -26,6 +29,7 @@ let signup = (newUser, callback) => {
 };
   let value = {
     user,
+    setUser,
     signup,
     signin,
     //signout,
@@ -61,10 +65,10 @@ export function AuthStatus() {
 }
 
 export function RequireAuth({ children }) {
-  let auth = useAuth();
+  let {user} = useAuth();
   let location = useLocation();
 
-  if (!auth.user) {
+  if (!user) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
@@ -72,5 +76,5 @@ export function RequireAuth({ children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children;
+  return children ;
 }
