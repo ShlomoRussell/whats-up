@@ -17,6 +17,7 @@ const authentication = {
         if (jRes.loggedIn) {
           authentication.loggedIn = true;
           authentication.token = jRes.token;
+          authentication.id=jRes.id
           callback();
         }
       })
