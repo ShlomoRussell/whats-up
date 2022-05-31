@@ -9,22 +9,16 @@ require("dotenv").config();
 
 const PORT = process.env.PORT;
 const app = express();
-const session = require("express-session");
 const server = require("http").createServer(app);
 const { Server } = require("socket.io");
-const jsonwebtoken = require("jsonwebtoken");
+
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const sessionMiddleware = session({
-  secret: "changeit",
-  resave: false,
-  saveUninitialized: true,
-});
 
-app.use(sessionMiddleware);
+
 app.use("/auth", authctrl);
 
 app.use(function (req, res, next) {
@@ -32,14 +26,14 @@ app.use(function (req, res, next) {
     const [type, token] = req.headers.authorization.split(" ");
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log(payload);
-    req.session.authorized = true;
     next();
   } catch (ex) {
     res.status(401).send();
   }
 });
+
 app.use("/api/users", apiCtrl);
-;
+
 
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/server/static/index.html');
@@ -53,7 +47,7 @@ const io = new Server(server, { cors: "localhost:3000" });
 const wrap = (middleware) => (socket, next) =>
   middleware(socket.request, {}, next);
 
-io.use(wrap(sessionMiddleware));
+
 io.use(function (socket, next) {
   try {
     const token = socket.handshake.auth.token;
@@ -66,6 +60,8 @@ io.use(function (socket, next) {
 });
 
 io.on("connection", (socket) => {
+  const id = socket.handshake.query.id
+  socket.join(id)
   socket.on("send-message", (sendToID, message) => {
     console.log(message);
     socket.to(sendToID).emit("receive-message", message);
