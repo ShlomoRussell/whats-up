@@ -1,6 +1,8 @@
 const { registerUser, login } = require("../logic/auth-logic");
 const ErrorModel = require("../models/error-model");
 const auth = require("express").Router();
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 auth.post("/register", async (req, res, next) => {
   try {
@@ -13,21 +15,14 @@ auth.post("/register", async (req, res, next) => {
 });
 
 auth.post("/login", async (req, res, next) => {
+  console.log(req.body)
   try {
-    const token = await login(req.body);
-    req.session.regenerate(function (err) {
-      if (err) next(err);
-
-      // store user information in session, typically a user id
-      req.session.user = req.body.username;
-
-      // save the session before redirection to ensure page
-      // load does not happen before session is saved
-      req.session.save(function (err) {
-        if (err) return next(err);
-        res.status(201).json({ token: token, loggedIn: true });
-      });
-    });
+  //  const [token,user] = await login(req.body);
+ const token=  jwt.sign(req.body, process.env.JWT_SECRET_KEY);
+ 
+   
+   
+        res.status(201).json({ token: token, loggedIn: true,id:req.body.id });
   } catch (err) {
     next(err);
   }
