@@ -19,8 +19,7 @@ const login = async credentials => {
     const user = users.find(u => u.username === credentials.username && u.password === credentials.password);
     if(!user) throw new ErrorModel(401, "invalid username or password");
 
-    const token = jsonWebToken.getNewToken(user);
-    return token;
+    return user
 }
 
 module.exports = {

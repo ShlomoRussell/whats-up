@@ -17,12 +17,11 @@ auth.post("/register", async (req, res, next) => {
 auth.post("/login", async (req, res, next) => {
   console.log(req.body)
   try {
-  //  const [token,user] = await login(req.body);
- const token=  jwt.sign(req.body, process.env.JWT_SECRET_KEY);
- 
-   
-   
-        res.status(201).json({ token: token, loggedIn: true,id:req.body.id });
+    const user = await login(req.body);
+    if(user){
+      const token = jwt.sign(req.body, process.env.JWT_SECRET_KEY);
+      res.status(201).json({ token: token, loggedIn: true, id: req.body.id });
+    }
   } catch (err) {
     next(err);
   }
