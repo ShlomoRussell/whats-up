@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import Login from "./components/Login";
 import { SocketProvider } from "./context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
-import {  RequireAuth } from "./context/AuthContext";
-import { ConversationsProvider } from "./context/ConversationsProvider";
-import MessageInput from "./components/MessageInput";
+import { RequireAuth } from "./context/AuthContext";
 import Register from "./components/Register";
+import ChatContainer from "./components/ChatContainer";
 
 function App() {
-const [id,setId]=useState(null)
+  const [id, setId] = useState(null);
   return (
     <Routes>
       <Route path="/login" element={<Login onSubmitId={setId} />} />
@@ -18,9 +17,7 @@ const [id,setId]=useState(null)
         element={
           <RequireAuth>
             <SocketProvider id={id}>
-              <ConversationsProvider>
-                <MessageInput />
-              </ConversationsProvider>
+              <ChatContainer />
             </SocketProvider>
           </RequireAuth>
         }
