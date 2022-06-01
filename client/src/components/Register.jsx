@@ -17,7 +17,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (passwordRef.current.value == confirmRef.current.value) {
+    if (passwordRef.current.value === confirmRef.current.value) {
       signup(
         {
           username: usernameRef.current.value,
