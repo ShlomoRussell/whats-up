@@ -1,61 +1,31 @@
-import React, { useEffect, useState, useContext, createRef } from "react";
+import React, { useContext, createRef } from "react";
 import { SocketContext } from "../context/SocketProvider";
-import { useAuth } from "../context/AuthContext";
 import { ConversationsContext } from "../context/ConversationsProvider";
-import Chat from "./Chat";
-import Search from "./Search";
-import { Form, Button } from "react-bootstrap";
-import { BiSend } from "react-icons/bi";
+import { Form } from "react-bootstrap";
+import SendMessageBtn from "./SendMessageBtn";
 
 function MessageInput() {
-  const styleTypes = {
-    sent: "bg-info bg-gradient align-self-end me-3",
-    received: "bg-success bg-opacity-25 align-self-start ms-3",
-  };
   const [conversations, setConverstaions] = useContext(ConversationsContext);
-
-  const { socket, sendMessage } = useContext(SocketContext);
-  const { user } = useAuth();
-  //const [socket, setSocket] = useState(socketContext);
-
-  useEffect(() => {
-    //  setSocket(socketContext);
-    if (socket === null) return;
-    socket.on("connect", () => {
-      console.log("connected");
-    });
-  }, [socket]);
-
-  useEffect(() => {
-    if (socket == null) return;
-
-    socket.on("receive-message", (message) => {
-      console.log(message);
-      setConverstaions([
-        ...conversations,
-        { message: message, type: styleTypes.received },
-      ]);
-    });
-  }, [conversations]);
+  const { sendMessage } = useContext(SocketContext);
 
   const messageRef = createRef();
   const idRef = createRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(conversations);
-    setConverstaions([
-      ...conversations,
-      { message: messageRef.current.value, type: styleTypes.sent },
-    ]);
-    sendMessage(messageRef.current.value);
+    const message = messageRef.current.value;
+    const id = idRef.current.value;
+
+    if (message && id) {
+      setConverstaions([
+        ...conversations,
+        { message: messageRef.current.value, type: "sent" },
+      ]);
+      sendMessage(idRef.current.value, messageRef.current.value);
+    }
   };
   return (
-    <div>
-      <Search />
-      <h4>
-        {user.username} {user["id"] ? `socket id:${user.id}` : null}
-      </h4>
-      <Chat conversations={conversations} />
+    <>
       <div className="d-flex end-0 bottom-0 w-75 position-fixed">
         <Form id="message" className="w-100" onSubmit={handleSubmit}>
           <Form.Group className="" controlId="send ">
@@ -65,17 +35,13 @@ function MessageInput() {
               placeholder="Send a message"
             />
           </Form.Group>
+          <Form.Group className="" controlId="send ">
+            <Form.Control ref={idRef} type="text" placeholder="id to send to" />
+          </Form.Group>
         </Form>
-        <Button
-          className="align-self-end "
-          variant="light"
-          form="message"
-          type="submit"
-        >
-          <BiSend />
-        </Button>
+        <SendMessageBtn />
       </div>
-    </div>
+    </>
   );
 }
 
