@@ -44,8 +44,6 @@ app.use(errorHandler);
 
 const io = new Server(server, { cors: "localhost:3000" });
 
-const wrap = (middleware) => (socket, next) =>
-  middleware(socket.request, {}, next);
 
 
 io.use(function (socket, next) {
@@ -61,10 +59,10 @@ io.use(function (socket, next) {
 
 io.on("connection", (socket) => {
   const id = socket.handshake.query.id
-  socket.join(id)
+  console.log(id)
+ socket.join(id)
   socket.on("send-message", (sendToID, message) => {
-    console.log(message);
-    socket.to(sendToID).emit("receive-message", message);
+  socket.to(sendToID).emit("receive-message", message);
   });
 
   console.log(`You're connect with the id:${socket.id}`);
