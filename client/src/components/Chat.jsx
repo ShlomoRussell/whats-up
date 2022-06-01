@@ -1,15 +1,37 @@
-import React from 'react'
-import { Stack } from 'react-bootstrap';
+import React, { useContext } from "react";
+import { Stack } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import { ConversationsContext } from "../context/ConversationsProvider";
 
-function Chat({conversations}) {
-  
+  const bootstrapClassTypes = {
+    sent: "bg-info bg-gradient align-self-end me-3",
+    received: "bg-success bg-opacity-25 align-self-start ms-3",
+  };
+  const styleTypes = {
+    sent: "30px 0px 25px 15px",
+    received: "0px 25px 15px 30px ",
+  };
+
+
+function Chat() {
+
+  const [conversations] = useContext(ConversationsContext);
+
   return (
     <Stack className="d-flex" gap={3}>
       {conversations.map((c) => (
         <div
           key={uuidv4()}
-          className={` rounded-pill text-center w-25 ${c.type} border`}
+          className={`text-break text-wrap text-center ${
+            bootstrapClassTypes[c.type]
+          } border`}
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            maxWidth:'60%',
+            padding: ".7rem",
+            borderRadius: styleTypes[c.type],
+          }}
         >
           {c.message}
         </div>
@@ -18,4 +40,4 @@ function Chat({conversations}) {
   );
 }
 
-export default Chat
+export default Chat;
