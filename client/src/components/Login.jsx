@@ -2,8 +2,7 @@ import React, { createRef } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { v4 as uuidv4 } from "uuid";
-import authentication from "../helpers/login.helper";
+import authentication from "../helpers/auth.helper";
 
 function Login({onSubmitId}) {
   const usernameRef = createRef();
@@ -57,7 +56,7 @@ function Login({onSubmitId}) {
       </Button>
       <Form.Group className="mb-3" controlId="register">
         <Form.Text className="text-muted">
-          Don't have an account? <Link to={"/register"}>Sign up here</Link>
+          Don't have an account yet? <Link to={"/register"}>Sign up here</Link>
         </Form.Text>
       </Form.Group>
     </Form>
