@@ -17,9 +17,6 @@ const authentication = {
         if (jRes.loggedIn) {
           authentication.loggedIn = true;
           authentication.token = jRes.token;
-          jRes.friends.forEach(element => {
-            console.log(element.id)
-          });
           authentication.id=jRes.id
           callback();
         }
