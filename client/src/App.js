@@ -4,7 +4,7 @@ import { SocketProvider } from "./context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
 import { RequireAuth } from "./context/AuthContext";
 import Register from "./components/Register";
-import ChatContainer from "./components/ChatContainer";
+import PageContainer from "./components/PageContainer";
 
 function App() {
   const [id, setId] = useState(null);
@@ -17,7 +17,7 @@ function App() {
         element={
           <RequireAuth>
             <SocketProvider id={id}>
-              <ChatContainer />
+             <PageContainer />
             </SocketProvider>
           </RequireAuth>
         }
