@@ -1,8 +1,6 @@
-import React, { createContext, useContext, useState, } from "react";
-import { useNavigate,useLocation,Navigate } from "react-router-dom";
-import authentication from '../helpers/auth.helper'
-
-
+import React, { createContext, useContext, useState } from "react";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import authentication from "../helpers/auth.helper";
 
 let AuthContext = createContext(null);
 
@@ -10,10 +8,7 @@ export function AuthProvider({ children }) {
   let [user, setUser] = useState(null);
 
   let signin = (newUser, callback) => {
-    return authentication.signIn(newUser,() => {
-      setUser(newUser);
-      callback();
-    });
+    return authentication.signIn(newUser, setUser, callback);
   };
   /*let signout = (callback) => {
     return fakeAuthProvider.signout(() => {
@@ -21,12 +16,9 @@ export function AuthProvider({ children }) {
       callback();
     });
   };*/
-let signup = (newUser, callback) => {
-  return authentication.register(newUser, () => {
-    setUser(newUser);
-    callback();
-  });
-};
+  let signup = (newUser, callback) => {
+    return authentication.register(newUser, setUser, callback);
+  };
   let value = {
     user,
     setUser,
@@ -65,7 +57,7 @@ export function AuthStatus() {
 }
 
 export function RequireAuth({ children }) {
-  let {user} = useAuth();
+  let { user } = useAuth();
   let location = useLocation();
 
   if (!user) {
@@ -76,5 +68,5 @@ export function RequireAuth({ children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children ;
+  return children;
 }
