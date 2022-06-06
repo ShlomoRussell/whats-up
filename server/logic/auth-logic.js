@@ -1,8 +1,7 @@
 const UserModel = require('../models/user-model');
 const dal = require('../DAL/dal');
-const jsonWebToken = require('../helpers/jwt-helper');
 const ErrorModel = require('../models/error-model');
-
+const jwt = require('jsonwebtoken')
 const registerUser = async user => {
     const users = await dal.getAllUsersAsync();
     const isntValidName = users.find(u => u.username === user.username);
@@ -10,7 +9,7 @@ const registerUser = async user => {
     user = new UserModel(user);
     await dal.saveAllUsersAsync([...users, user]);
 
-    const token = jsonWebToken.getNewToken(user);
+    const token = jwt.sign(user);
     return token;
 };
 
