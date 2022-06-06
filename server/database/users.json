@@ -9,7 +9,25 @@
         "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
         "username": "Amit Licht",
         "password": 3333,
-        "unreadMessages": []
+        "friends": [
+            {
+                "name": "amit",
+                "roomId": "",
+                "id": "d0fe43d1-6a0f-443c-b10a-26599b39e176",
+                "messages": [
+                    {
+                        "direction": "incoming",
+                        "time": "",
+                        "message": ""
+                    },
+                    {
+                        "direction": "outgoing",
+                        "time": "",
+                        "message": ""
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "82a93d6d-6181-4763-ac90-177cd05c39b7",
@@ -57,6 +75,18 @@
         "id": "9d8e0842-2e8c-4d2b-b27d-c18b02cbe7dd",
         "username": "baby",
         "password": "mmmm",
+        "unreadMessages": []
+    },
+    {
+        "id": "b5355ff7-f47c-4709-a6c0-205fb9add048",
+        "username": "joe shmo",
+        "password": "haveagoodlife",
+        "unreadMessages": []
+    },
+    {
+        "id": "414b9212-f481-42f0-993f-af54e9cdedc9",
+        "username": "yankle ",
+        "password": "aaaa",
         "unreadMessages": []
     }
 ]
