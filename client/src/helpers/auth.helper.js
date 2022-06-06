@@ -1,7 +1,7 @@
 const authentication = {
   loggedIn: false,
   token: "",
-  async signIn({ username, password }, callback) {
+  async signIn({ username, password }, setUser, callback) {
     return await fetch("http://localhost:5782/auth/login", {
       method: "POST",
       body: JSON.stringify({
@@ -17,13 +17,14 @@ const authentication = {
         if (jRes.loggedIn) {
           authentication.loggedIn = true;
           authentication.token = jRes.token;
-          authentication.id=jRes.id
+          authentication.id = jRes.id;
+          setUser(jRes);
           callback();
         }
       })
       .catch((err) => console.log(err));
   },
-  async register(data, callback) {
+  async register(data, setUser, callback) {
     return await fetch("http://localhost:5782/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
@@ -36,11 +37,12 @@ const authentication = {
         if (jRes.loggedIn) {
           authentication.loggedIn = true;
           authentication.token = jRes.token;
+          setUser(jRes);
           callback();
         }
       })
       .catch((err) => console.log(err));
-  }
+  },
 };
 
 export default authentication;
