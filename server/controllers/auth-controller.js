@@ -19,7 +19,7 @@ auth.post("/login", async (req, res, next) => {
   try {
     const user = await login(req.body);
     if(user){
-      const token = jwt.sign(req.body, process.env.JWT_SECRET_KEY);
+      const token = jwt.sign({...req.body,id:user.id}, process.env.JWT_SECRET_KEY);
       res.status(201).json({ token: token, loggedIn: true, ...user });
     }
   } catch (err) {
