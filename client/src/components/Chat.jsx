@@ -15,30 +15,28 @@ import { ConversationsContext } from "../context/ConversationsProvider";
 
 function Chat() {
 
-  const [conversations] = useContext(ConversationsContext);
+  const { currentConversation } = useContext(ConversationsContext);
 
   return (
-    
-      <Stack className="d-flex align-self-end w-100 overflow-auto"gap={3}>
-        {conversations.map((c) => (
-          <div
-            key={uuidv4()}
-            className={`text-break text-wrap text-center ${
-              bootstrapClassTypes[c.type]
-            } border`}
-            style={{
-              width: "fit-content",
-              height: "fit-content",
-              maxWidth: "75%",
-              padding: ".7rem",
-              borderRadius: styleTypes[c.type],
-            }}
-          >
-            {c.message}
-          </div>
-        ))}
-      </Stack>
- 
+    <Stack className="d-flex align-self-end w-100 overflow-auto" gap={3}>
+      {currentConversation.map((c) => (
+        <div
+          key={uuidv4()}
+          className={`text-break text-wrap text-center ${
+            bootstrapClassTypes[c.type]
+          } border`}
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            maxWidth: "75%",
+            padding: ".7rem",
+            borderRadius: styleTypes[c.type],
+          }}
+        >
+          {c.message}
+        </div>
+      ))}
+    </Stack>
   );
 }
 
