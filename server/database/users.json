@@ -2,7 +2,7 @@
     {
         "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
         "username": "Shlomo Russell",
-        "password": 1234,
+        "password": "1234",
          "contacts": [
             {
                 "username": "Amit Licht",
@@ -24,7 +24,7 @@
     {
         "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
         "username": "Amit Licht",
-        "password": 3333,
+        "password":"3333",
         "contacts": [
             {
                 "username": "Shlomo Russell",

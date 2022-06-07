@@ -1,24 +1,57 @@
-import React, { createContext, useContext, useState } from "react";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
-import authentication from "../helpers/auth.helper";
-
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useLocation, Navigate } from "react-router-dom";
 let AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   let [user, setUser] = useState(null);
 
-  let signin = (newUser, callback) => {
-    return authentication.signIn(newUser, setUser, callback);
+  let signin = async ({ username, password }, onSubmitId, callback) => {
+    try {
+      const res = await fetch("http://localhost:5782/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const jRes = await res.json();
+      if (jRes.token) {
+        onSubmitId(jRes.token);
+        callback();
+      }
+    } catch (err) {
+      return console.log(err);
+    }
   };
+
   /*let signout = (callback) => {
     return fakeAuthProvider.signout(() => {
       setUser(null);
       callback();
     });
   };*/
-  let signup = (newUser, callback) => {
-    return authentication.register(newUser, setUser, callback);
+  let signup = async (newUser, onSubmitId, callback) => {
+    try {
+      const res = await fetch("http://localhost:5782/auth/register", {
+        method: "POST",
+        body: JSON.stringify(newUser),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const jRes = await res.json();
+      if (jRes.token) {
+        onSubmitId(jRes.token);
+        callback();
+      }
+    } catch (err) {
+      return console.log(err);
+    }
   };
+
   let value = {
     user,
     setUser,
@@ -34,37 +67,13 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthStatus() {
-  let auth = useAuth();
-  let navigate = useNavigate();
+export function RequireAuth({ id, children }) {
 
-  if (!auth.user) {
-    return <p>You are not logged in.</p>;
-  }
-
-  return (
-    <p>
-      Welcome {auth.user}!{" "}
-      <button
-        onClick={() => {
-          auth.signout(() => navigate("/"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
-  );
-}
-
-export function RequireAuth({ children }) {
-  let { user } = useAuth();
+  let { user, setUser } = useAuth();
   let location = useLocation();
 
+  
   if (!user) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

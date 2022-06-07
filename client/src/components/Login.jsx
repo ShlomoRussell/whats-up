@@ -2,7 +2,8 @@ import React, { createRef } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import authentication from "../helpers/auth.helper";
+
+
 
 function Login({onSubmitId}) {
   const usernameRef = createRef();
@@ -17,16 +18,14 @@ function Login({onSubmitId}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signin(
-      {
+    
+    signin({
         username: usernameRef.current.value,
         password: passwordRef.current.value,
-      }, 
-      () => {
-      onSubmitId(authentication.id)
+      }, onSubmitId, () => {       
         navigate(from, { replace: true });
       }
-    );
+    )
    
   };
 

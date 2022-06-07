@@ -5,15 +5,17 @@ const dal = require("../DAL/dal");
 const jwt = require("jsonwebtoken");
 
 apiCtrl.get("/", async (req, res, next) => {
-  const users = await logic.getAllUsersAsync();
-  res.json(users);
+  const token = req.headers.authorization.split(' ')[1];
+const {username}=jwt.decode(token)
+  const user = await logic.getAllUsersAsync().then(res => res.find(u=> u.username === username));
+  res.json(user);
 });
 
-apiCtrl.get("/:contact", async (req, res) => {
+apiCtrl.get("/contact/:contact", async (req, res) => {
   const contact = req.params.contact;
-  const currentUser = req.headers.authorization.split(" ")[1];
+  const token = req.headers.authorization.split(" ")[1];
 
-  const { id } = jwt.decode(currentUser);
+  const { id } = jwt.decode(token);
 
   const result = await dal
     .getAllUsersAsync()

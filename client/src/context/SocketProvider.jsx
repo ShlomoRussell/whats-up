@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import authentication from "../helpers/auth.helper";
 import { ConversationsProvider } from "./ConversationsProvider";
 
 export const SocketContext = createContext();
@@ -14,7 +13,7 @@ export function SocketProvider({ id, children }) {
       secure: true,
       query: { id },
       auth: {
-        token: authentication.token,
+        token: localStorage.getItem("what's-up-token"),
       },
     });
 

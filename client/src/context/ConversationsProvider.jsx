@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import authentication from "../helpers/auth.helper";
+
 
 export const ConversationsContext = createContext();
 
@@ -15,8 +15,8 @@ export function ConversationsProvider({ incomingMessage, children }) {
 
   useEffect(() => {
     if (!currentContactId) return;
-    fetch(`http://localhost:5782/api/users/${currentContactId}`, {
-      headers: { Authorization: "Bearer " + authentication.token },
+    fetch(`http://localhost:5782/api/users/contact/${currentContactId}`, {
+      headers: { Authorization: "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")) },
     })
       .then((res) => res.json())
       .then((jres) =>

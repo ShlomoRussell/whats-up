@@ -3,7 +3,7 @@ import { SocketContext } from "../context/SocketProvider";
 import { ConversationsContext } from "../context/ConversationsProvider";
 import { Form } from "react-bootstrap";
 import SendMessageBtn from "./SendMessageBtn";
-import { useAuth } from "../context/AuthContext";
+
 
 function MessageInput() {
   const { currentConversation, setCurrentConversation,currentContactId} = useContext(ConversationsContext);

@@ -15,11 +15,11 @@ function SidebarContainer() {
           to={"/"}
           className="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"
         >
-          <h3>{user.username}</h3>
+          <h3>{user?user.username:null}</h3>
         </Link>
-        {user['contacts'].map((c) => (
+        {user?user['contacts'].map((c) => (
           <Contact key={uuidv4()} contact={ c}/>
-        ))}
+        )):null}
       </div>
     </div>
   );
