@@ -69,10 +69,10 @@ export function useAuth() {
 
 export function RequireAuth({ id, children }) {
 
-  let { user, setUser } = useAuth();
+  let { user,  } = useAuth();
   let location = useLocation();
 
-  
+  if(id)return children
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

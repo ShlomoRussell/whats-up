@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 
 
-function Login({onSubmitId}) {
+function Login({token,onSubmitId}) {
   const usernameRef = createRef();
   const passwordRef = createRef();
 
@@ -28,7 +28,7 @@ function Login({onSubmitId}) {
     )
    
   };
-
+if(token)return navigate('/')
   return (
     <Form
       className="position-absolute top-50 start-50 translate-middle"

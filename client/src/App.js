@@ -10,6 +10,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 function App() {
   const {user,setUser}=useAuth()
   const [id, setId] = useLocalStorage('token');
+
    useEffect(() => {
      if (id == null) return;
      fetch("http://localhost:5782/api/users/", {
@@ -20,7 +21,7 @@ function App() {
    }, [id]);
   return (
     <Routes>
-      <Route path="/login" element={<Login onSubmitId={setId} />} />
+      <Route path="/login" element={<Login token={id} onSubmitId={setId} />} />
       <Route path="/register" element={<Register />} />
       <Route
         path="/"
