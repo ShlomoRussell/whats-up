@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 
 
-function Login({token,onSubmitId}) {
+function Login({ token, onSubmitId, onSubmitToken }) {
   const usernameRef = createRef();
   const passwordRef = createRef();
 
@@ -18,17 +18,18 @@ function Login({token,onSubmitId}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    signin({
+
+    signin( {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
-      }, onSubmitId, () => {       
+      },
+      onSubmitId, onSubmitToken ,
+      () => {
         navigate(from, { replace: true });
       }
-    )
-   
+    );
   };
-if(token)return navigate('/')
+  if (token) return navigate("/");
   return (
     <Form
       className="position-absolute top-50 start-50 translate-middle"

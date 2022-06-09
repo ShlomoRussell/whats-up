@@ -13,7 +13,7 @@ export function SocketProvider({ id, children }) {
       secure: true,
       query: { id },
       auth: {
-        token: localStorage.getItem("what's-up-token"),
+        token: JSON.parse(localStorage.getItem("what's-up-token")),
       },
     });
 
@@ -22,7 +22,7 @@ export function SocketProvider({ id, children }) {
     return () => newSocket.close();
   }, []);
 
-  const [incomingMessage, setIncomingMessage] = useState();
+  const [incomingMessage, setIncomingMessage] = useState(null);
 
   function sendMessage(recipients, message, callback) {
     socket.emit("send-message", recipients, message);

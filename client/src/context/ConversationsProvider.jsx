@@ -9,7 +9,6 @@ export function ConversationsProvider({ incomingMessage, children }) {
   const [currentContactId, setCurrentContactId] = useState("");
   useEffect(() => {
     if (incomingMessage == null) return;
-
     setCurrentConversation([...currentConversation, incomingMessage]);
   }, [incomingMessage]);
 
