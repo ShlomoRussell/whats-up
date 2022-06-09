@@ -1,26 +1,55 @@
-const UserModel = require('../models/user-model');
+const UserModel = require("../models/user-model");
 
-const fs = require('fs').promises;
+const fs = require("fs").promises;
 
-const getAllUsersAsync = () => fs.readFile(__dirname + "/../" +'database' + '/users.json')
-    .then(res => JSON.parse(res));
+const getAllUsersAsync = () =>
+  fs
+    .readFile(__dirname + "/../" + "database" + "/users.json")
+    .then((res) => JSON.parse(res));
+
+const saveAllUsersAsync = (users) =>
+  fs.writeFile(
+    __dirname + "/../" + "database" + "/users.json",
+    JSON.stringify(users, null, 4)
+  );
 
 
-const saveAllUsersAsync = users => fs.writeFile(__dirname + "/../"+'database'+'/users.json',JSON.stringify(users, null, 4));
+  
+const getUserById = async (userId) => {
+  const user = await getAllUsersAsync().then((res) =>
+    res.find((u) => u.id === userId)
+  );
+  return user;
+};
+const getUsersMessages = (userId) => {};
 
-/*
-const UserModel = require('../models/user-model');
+const getUserByUsernameAsync = async (username) => {
+  const user = await getAllUsersAsync().then((res) =>
+    res.find((u) => u.username === username)
+  );
+  if (!user) return null;
+  return user;
+};
 
-(function generateFakeDb(){
-    const user1 = new UserModel('Shlomo Russel', 1234);
-    const user2 = new UserModel('Amit Licht', 1212);
-    const user3 = new UserModel('Amit Engel', 3426);
-    const user4 = new UserModel('Yaakov Hatam', 8989);
-    saveAllUsersAsync([user1, user2, user3,user4]);
-})();
-*/
+const updateUserAsync = async (userId, changedParams) => {
+  const users = await getAllUsersAsync();
+  const idx = users.findIndex((u) => u.id === userId);
+  if (idx === -1) return null;
+  users[idx] = { ...users[idx], ...changedParams };
+  dal.saveAllUsersAsync(users);
+  return users[idx];
+};
+
+const deleteUserAsync = (id) =>
+  getAllUsersAsync()
+    .then((users) => users.filter((u) => u.id !== id))
+    .then((res) => dal.saveAllUsersAsync(res));
 
 module.exports = {
-    getAllUsersAsync,
-    saveAllUsersAsync
-}
+  getUserByUsernameAsync,
+  getAllUsersAsync,
+  saveAllUsersAsync,
+  updateUserAsync,
+  deleteUserAsync,
+  getUserById,
+};

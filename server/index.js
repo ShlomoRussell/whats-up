@@ -58,8 +58,7 @@ io.use(function (socket, next) {
 
 io.on("connection", (socket) => {
   const id = socket.handshake.query.id
-  console.log(id)
- socket.join(id)
+  socket.join(id)
   socket.on("send-message", (sendToID, message) => {
   socket.to(sendToID).emit("receive-message", message);
   });

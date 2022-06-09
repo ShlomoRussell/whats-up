@@ -1,27 +1,24 @@
 const ErrorModel = require("../models/error-model");
-const logic = require("../logic/user-logic");
 const apiCtrl = require("express").Router();
 const dal = require("../DAL/dal");
 const jwt = require("jsonwebtoken");
 
-apiCtrl.get("/", async (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];
-const {username}=jwt.decode(token)
-  const user = await logic.getAllUsersAsync().then(res => res.find(u=> u.username === username));
+apiCtrl.get("/", async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const { username } = jwt.decode(token);
+  const user = await dal.getUserByUsernameAsync(username);
   res.json(user);
 });
 
-apiCtrl.get("/contact/:contact", async (req, res) => {
-  const contact = req.params.contact;
+apiCtrl.get("/contact/:contactId", async (req, res) => {
+  const contactId = req.params.contactId;
   const token = req.headers.authorization.split(" ")[1];
 
   const { id } = jwt.decode(token);
 
   const result = await dal
-    .getAllUsersAsync()
-    .then((res) => res.find((u) => u.id === id))
-    .then((res) => res["contacts"].find((c) => c.id === contact));
-  console.log(result)
+    .getUserById(id)
+    .then((res) => res["contacts"].find((c) => c.id === contactId));
   res.send(result);
 });
 
