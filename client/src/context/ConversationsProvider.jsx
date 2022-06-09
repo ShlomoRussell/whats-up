@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 
-
 export const ConversationsContext = createContext();
 
 export function ConversationsProvider({ incomingMessage, children }) {
@@ -8,14 +7,17 @@ export function ConversationsProvider({ incomingMessage, children }) {
   const [currentConversation, setCurrentConversation] = useState([]);
   const [currentContactId, setCurrentContactId] = useState("");
   useEffect(() => {
-    if (incomingMessage == null) return;
+    if (incomingMessage == null || !currentContactId) return;
     setCurrentConversation([...currentConversation, incomingMessage]);
   }, [incomingMessage]);
 
   useEffect(() => {
     if (!currentContactId) return;
     fetch(`http://localhost:5782/api/users/contact/${currentContactId}`, {
-      headers: { Authorization: "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")) },
+      headers: {
+        Authorization:
+          "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")),
+      },
     })
       .then((res) => res.json())
       .then((jres) =>

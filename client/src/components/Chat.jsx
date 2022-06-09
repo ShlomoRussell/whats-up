@@ -3,6 +3,7 @@ import { Stack } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { ConversationsContext } from "../context/ConversationsProvider";
 
+
   const bootstrapClassTypes = {
     sent: "bg-info bg-gradient align-self-end me-3",
     received: "bg-success bg-opacity-25 align-self-start ms-3",
@@ -14,29 +15,38 @@ import { ConversationsContext } from "../context/ConversationsProvider";
 
 
 function Chat() {
-
   const { currentConversation } = useContext(ConversationsContext);
 
   return (
-    <Stack className="d-flex align-self-end w-100 overflow-auto" gap={3}>
-      {currentConversation.map((c) => (
-        <div
-          key={uuidv4()}
-          className={`text-break text-wrap text-center ${
-            bootstrapClassTypes[c.type]
-          } border`}
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-            maxWidth: "75%",
-            padding: ".7rem",
-            borderRadius: styleTypes[c.type],
-          }}
-        >
-          {c.message}
-        </div>
-      ))}
-    </Stack>
+    <div
+     
+    >
+      <Stack
+        className="d-flex align-self-end w-100  "
+        gap={3}
+        style={{
+          height: `100%`,
+        }}
+      >
+        {currentConversation.map((c) => (
+          <div
+            key={uuidv4()}
+            className={`text-break text-wrap text-center ${
+              bootstrapClassTypes[c.type]
+            } border`}
+            style={{
+              width: "fit-content",
+              height: "fit-content",
+              maxWidth: "75%",
+              padding: ".7rem",
+              borderRadius: styleTypes[c.type],
+            }}
+          >
+            {c.message}
+          </div>
+        ))}
+      </Stack>
+    </div>
   );
 }
 
