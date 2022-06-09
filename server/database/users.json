@@ -1,47 +1,256 @@
 [
-    {
-        "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
-        "username": "Shlomo Russell",
-        "password": "1234",
-         "contacts": [
-            {
-                "username": "Amit Licht",
-                "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
-                "messages": [
-                    {
-                        "type": "sent",
-                        "time": "",
-                        "message": "gheg"
-                    },
-                    {
-                        "type": "received",
-                        "time": "5:30",
-                        "message": "ghg"
-                    }
-                ]
-            }]
-    },
-    {
-        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+  {
+    "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
+    "username": "Shlomo Russell",
+    "password": "1234",
+    "contacts": [
+      {
         "username": "Amit Licht",
-        "password":"3333",
-        "contacts": [
-            {
-                "username": "Shlomo Russell",
-                "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
-                "messages": [
-                    {
-                        "type": "sent",
-                        "time": "",
-                        "message": "gheg"
-                    },
-                    {
-                        "type": "received",
-                        "time": "5:30",
-                        "message": "ghg"
-                    }
-                ]
-            }
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
         ]
-    }
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      },
+      {
+        "username": "Amit Licht",
+        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+    "username": "Amit Licht",
+    "password": "3333",
+    "contacts": [
+      {
+        "username": "Shlomo Russell",
+        "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
+        "messages": [
+          {
+            "type": "sent",
+            "time": "",
+            "message": "gheg"
+          },
+          {
+            "type": "received",
+            "time": "5:30",
+            "message": "ghg"
+          }
+        ]
+      }
+    ]
+  }
 ]
