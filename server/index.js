@@ -34,9 +34,9 @@ app.use(function (req, res, next) {
 app.use("/api/users", apiCtrl);
 
 
-app.get('*', function(req, res) {
+/*app.get('*', function(req, res) {
     res.sendFile(__dirname + '/server/static/index.html');
-});
+});*/
 
 app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
@@ -60,7 +60,8 @@ io.on("connection", (socket) => {
   const id = socket.handshake.query.id
   socket.join(id)
   socket.on("send-message", (sendToID, message) => {
-  socket.to(sendToID).emit("receive-message", message);
+    socket.to(sendToID).volatile.emit("receive-message", message);
+    
   });
 
   console.log(`You're connect with the id:${socket.id}`);
