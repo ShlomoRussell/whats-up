@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { createRef, useEffect } from 'react'
 import Search from './Search';
 
-function Header() {
+function Header({ setHeaderHeight }) {
+  const headerHeightRef = createRef();
+  useEffect(() => {
+    setHeaderHeight(headerHeightRef.current.offsetHeight);
+  }, []);
   return (
-    <nav className="navbar bg-light">
+    <nav ref={headerHeightRef} className="navbar bg-light">
       <div className="container-fluid">
         <a href="/" className="navbar-brand">
           <img src="what's-up.jpg" alt="company logo" />
