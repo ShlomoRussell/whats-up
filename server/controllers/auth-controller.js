@@ -1,4 +1,3 @@
-const { registerUser, login } = require("../logic/auth-logic");
 const ErrorModel = require("../models/error-model");
 const auth = require("express").Router();
 const jwt = require("jsonwebtoken");
