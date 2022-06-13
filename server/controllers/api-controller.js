@@ -3,14 +3,15 @@ const apiCtrl = require("express").Router();
 const dal = require("../DAL/dal");
 const jwt = require("jsonwebtoken");
 
-apiCtrl.get("/", async (req, res) => {
+apiCtrl.get("/contacts", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const { username } = jwt.decode(token);
   const user = await dal.getUserByUsernameAsync(username);
+  console.log(user)
   res.json(user);
 });
 
-apiCtrl.get("/contact/:contactId", async (req, res) => {
+apiCtrl.get("/contacts/:contactId", async (req, res) => {
   const contactId = req.params.contactId;
   const token = req.headers.authorization.split(" ")[1];
 
