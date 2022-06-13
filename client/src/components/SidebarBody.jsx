@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import "../styles/scrollbar.css";
 
 export default function SidebarBody() {
-    const{user}=useAuth()
+  const { user } = useAuth()
   return (
     <div
       style={{ overflowY: "auto" }}

@@ -13,7 +13,7 @@ export function ConversationsProvider({ incomingMessage, children }) {
 
   useEffect(() => {
     if (!currentContactId) return;
-    fetch(`http://localhost:5782/api/users/contact/${currentContactId}`, {
+    fetch(`http://localhost:5782/api/users/contacts/${currentContactId}`, {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")),
