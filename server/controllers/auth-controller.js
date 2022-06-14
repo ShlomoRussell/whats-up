@@ -21,14 +21,18 @@ auth.post("/register", async (req, res, next) => {
   if (error) return res.status(400).send(error.message);
   const userExistAlready = await dal.getUserByUsernameAsync(value.username);
   const newId = uuidv4();
-  if (!userExistAlready) {
-    bcrypt.hash(value.password, saltRounds, function (err, hash) {
-      console.log(hash);
-      console.log({ ...value, id: newId });
-      const token = jwt.sign({ username: value.username,id:newId },process.env.JWT_SECRET_KEY);
-      res.status(201).json({ token: token, id: newId });
-    });
-  }
+  if (userExistAlready)
+    return res
+      .status(409)
+      .send("Username already exist! Please try a different one!");
+  const hash = await bcrypt.hash(value.password, saltRounds);
+  delete value["confirmPassword"];
+  dal.addUser({ ...value, id: newId, password: hash });
+  const token = jwt.sign(
+    { username: value.username, id: newId },
+    process.env.JWT_SECRET_KEY
+  );
+  res.status(201).json({ token: token, id: newId });
 });
 
 const loginSchema = Joi.object({
@@ -40,20 +44,20 @@ auth.post("/login", async (req, res, next) => {
   const { error } = loginSchema.validate(req.body);
   if (error) return res.status(400).send(error.message);
 
-  const { username } = req.body;
-  try {
-    const user = await dal.getUserByUsernameAsync(username);
-    console.log(user);
-    if (user) {
-      const token = jwt.sign(
-        { ...req.body, id: user.id },
-        process.env.JWT_SECRET_KEY
-      );
-      res.status(201).json({ id: user.id, token: token });
-    }
-  } catch (err) {
-    next(err);
-  }
+  const { username, password } = req.body;
+
+  const user = await dal.getUserByUsernameAsync(username);
+
+  if (!user) return res.status(404).send("username not found");
+  const result = await bcrypt.compare(password, user.password);
+  console.log(result);
+  if (!result) return res.status(404).send("Incorrect password");
+
+  const token = jwt.sign(
+    { username: req.body.username, id: user.id },
+    process.env.JWT_SECRET_KEY
+  );
+  res.status(201).json({ id: user.id, token: token });
 });
 
 module.exports = auth;
