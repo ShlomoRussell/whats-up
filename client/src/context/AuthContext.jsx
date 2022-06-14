@@ -3,9 +3,14 @@ import { useLocation, Navigate } from "react-router-dom";
 let AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  let [user, setUser] = useState(null);
-
-  let signin = async ({ username, password },  onSubmitId,onSubmitToken, callback) => {
+  const [user, setUser] = useState(null);
+  const [authError, setAuthError] = useState(null);
+  const signin = async (
+    { username, password },
+    onSubmitId,
+    onSubmitToken,
+    callback
+  ) => {
     try {
       const res = await fetch("http://localhost:5782/auth/login", {
         method: "POST",
@@ -17,14 +22,18 @@ export function AuthProvider({ children }) {
           "Content-Type": "application/json",
         },
       });
+      if (res.status !== 201) {
+        const errorMessage = await res.text();
+        throw new Error(errorMessage);
+      }
       const jRes = await res.json();
       if (jRes.token) {
         onSubmitId(jRes.id);
-        onSubmitToken(jRes.token)
+        onSubmitToken(jRes.token);
         callback();
       }
     } catch (err) {
-      return console.log(err);
+      return setAuthError(err.message);
     }
   };
 
@@ -34,7 +43,7 @@ export function AuthProvider({ children }) {
       callback();
     });
   };*/
-  let signup = async (newUser, onSubmitId,onSubmitToken, callback) => {
+  const signup = async (newUser, onSubmitId, onSubmitToken, callback) => {
     try {
       const res = await fetch("http://localhost:5782/auth/register", {
         method: "POST",
@@ -43,22 +52,27 @@ export function AuthProvider({ children }) {
           "Content-Type": "application/json",
         },
       });
+      if (res.status !== 201) {
+        const errorMessage = await res.text();
+        throw new Error(errorMessage);
+      }
       const jRes = await res.json();
       if (jRes.token) {
         onSubmitId(jRes.id);
-        onSubmitToken(jRes.token)
+        onSubmitToken(jRes.token);
         callback();
       }
     } catch (err) {
-      return console.log(err);
+      return setAuthError(err.message);
     }
   };
 
-  let value = {
+  const value = {
     user,
     setUser,
     signup,
     signin,
+    authError,
     //signout,
   };
 
@@ -70,11 +84,10 @@ export function useAuth() {
 }
 
 export function RequireAuth({ token, children }) {
-
-  let { user,  } = useAuth();
+  let { user } = useAuth();
   let location = useLocation();
 
-  if(token)return children
+  if (token) return children;
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

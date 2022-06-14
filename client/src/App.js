@@ -29,7 +29,10 @@ function App() {
           <Login token={token} onSubmitId={setId} onSubmitToken={setToken} />
         }
       />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/register"
+        element={<Register onSubmitId={setId} onSubmitToken={setToken} />}
+      />
       <Route
         path="/"
         element={
