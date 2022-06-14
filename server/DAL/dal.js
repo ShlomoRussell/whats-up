@@ -29,6 +29,7 @@ const saveAllUsersAsync = (users) =>
   );
 const addUser = async (newUser) => {
   const users = await getAllUsersAsync();
+  console.log(newUser)
   try {
     await saveAllUsersAsync([...users, newUser]);
     return true;

@@ -1,8 +1,9 @@
 [
     {
-        "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
-        "username": "Shlomo Russell",
-        "password": "1234",
+        "username": "Shlomo Russel",
+        "password": "$2b$10$f1hwtP23.EQuQXcRYBGfh.YmE7PdQdvy7GlmLW.CKxEfUi4S6Kb3m",
+        "email": "adfa@asdasd.com",
+        "id": "36908432-652c-41e2-82ec-b45ee21893b1",
         "contacts": [
             {
                 "username": "Amit Licht",
@@ -258,5 +259,21 @@
         "email": "leanard@music.com",
         "password": "$2b$10$7.XcMm2sIZ.kc00MNzxkJOhLIbgObkz6YYmeb8UrG0F9C6OUAT8Qi",
         "id": "dacae8d0-ebd7-4e77-8c8b-4f6f18c40bf9"
+    },
+    {
+        "username": "john doe",
+        "password": "$2b$10$FIV0wcdn.OAPBRw9.vwKHuhcL/oQBFNAhzaZFiXjxohIsj8CC8.QO",
+        "email": "somewhere@something.com",
+        "id": "a33b1f3a-64b8-4375-8b9d-cba94c894924",
+        "contacts": []
+    },
+    {
+        "username": "Avrumie",
+        "password": "$2b$10$RxtXgxI8CnJirk.Ei2uvW.nDI7HqUrsRx6FQenwComT0cPES2t/4O",
+        "email": "adfa@asdasd.com",
+        "id": "e62ee35f-e673-4ea1-9154-c4ab11667956",
+        "contacts": [
+            null
+        ]
     }
 ]

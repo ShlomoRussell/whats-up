@@ -18,20 +18,35 @@ const registerSchema = Joi.object({
 
 auth.post("/register", async (req, res, next) => {
   const { error, value } = registerSchema.validate(req.body);
-  if (error) return res.status(400).send(error.message);
+  console.log(error);
+  if (error) {
+    const errorMessage =
+      error.message == '"confirmPassword" must be [ref:password]'
+        ? "Confirm Password and password must match"
+        : error.message;
+    return res.status(400).send(errorMessage);
+  }
+
   const userExistAlready = await dal.getUserByUsernameAsync(value.username);
+
   const newId = uuidv4();
+
   if (userExistAlready)
     return res
       .status(409)
       .send("Username already exist! Please try a different one!");
+
   const hash = await bcrypt.hash(value.password, saltRounds);
+
   delete value["confirmPassword"];
-  dal.addUser({ ...value, id: newId, password: hash });
+
+  dal.addUser({ ...value, id: newId, password: hash, contacts: [null] });
+
   const token = jwt.sign(
     { username: value.username, id: newId },
     process.env.JWT_SECRET_KEY
   );
+
   res.status(201).json({ token: token, id: newId });
 });
 
@@ -47,11 +62,10 @@ auth.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
 
   const user = await dal.getUserByUsernameAsync(username);
+  if (!user) return res.status(404).send("Username not found!");
 
-  if (!user) return res.status(404).send("username not found");
   const result = await bcrypt.compare(password, user.password);
-  console.log(result);
-  if (!result) return res.status(404).send("Incorrect password");
+  if (!result) return res.status(404).send("Incorrect password!");
 
   const token = jwt.sign(
     { username: req.body.username, id: user.id },
