@@ -1,14 +1,14 @@
 const UserModel = require("../models/user-model");
 const mysql = require("mysql");
 
-const pool = mysql.createPool({
+/*const pool = mysql.createPool({
   connectionLimit: 100, //important
   host: "localhost",
   user: "root",
   password: "",
   database: "whats_up",
   debug: false,
-});
+});*/
 
 const fs = require("fs").promises;
 
@@ -27,7 +27,15 @@ const saveAllUsersAsync = (users) =>
     __dirname + "/../" + "database" + "/users.json",
     JSON.stringify(users, null, 4)
   );
-
+const addUser = async (newUser) => {
+  const users = await getAllUsersAsync();
+  try {
+    await saveAllUsersAsync([...users, newUser]);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
 const getUserById = async (userId) => {
   const user = await getAllUsersAsync().then((res) =>
     res.find((u) => u.id === userId)
@@ -37,7 +45,7 @@ const getUserById = async (userId) => {
 const getUsersMessages = (userId) => {};
 
 const getUserByUsernameAsync = async (username) => {
- /* return new Promise((res, rej) => {
+  /* return new Promise((res, rej) => {
     pool.query(
       "SELECT username,password,user_id as id FROM users WHERE username = ?",
       username,
@@ -56,9 +64,7 @@ const getUserByUsernameAsync = async (username) => {
   return user;
 };
 
-const getContacts = (username) => {
-  
-}
+const getContacts = (username) => {};
 
 const updateUserAsync = async (userId, changedParams) => {
   const users = await getAllUsersAsync();
@@ -81,4 +87,5 @@ module.exports = {
   updateUserAsync,
   deleteUserAsync,
   getUserById,
+  addUser,
 };
