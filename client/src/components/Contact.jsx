@@ -3,10 +3,14 @@ import { Button } from "react-bootstrap";
 import { ConversationsContext } from "../context/ConversationsProvider";
 
 function Contact({ contact }) {
-  const { setCurrentContactId } = useContext(ConversationsContext);
+  const { currentContact, setCurrentContact } = useContext(
+    ConversationsContext
+  );
 
   const handleClick = (e) => {
-    setCurrentContactId(contact.id);
+    if (!currentContact || currentContact.id != contact.id) {
+      setCurrentContact({ id: contact.id, name: contact.username });
+    }
   };
 
   return (
@@ -22,7 +26,7 @@ function Contact({ contact }) {
             {contact.messages[contact.messages.length - 1].time}
           </small>
         </div>
-        <div className="col-10 mb-1 small">
+        <div className="col-10 mb-1 small overflow-hidden">
           {contact.messages[contact.messages.length - 1].message}...
         </div>
       </Button>

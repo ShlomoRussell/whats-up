@@ -8,7 +8,7 @@ function MessageInput({ setMsgInptHeight }) {
   const {
     currentConversation,
     setCurrentConversation,
-    currentContactId,
+    currentContact,
   } = useContext(ConversationsContext);
   const { sendMessage } = useContext(SocketContext);
   const [inputValue, setInputValue] = useState("");
@@ -22,20 +22,20 @@ function MessageInput({ setMsgInptHeight }) {
         ...currentConversation,
         { message: inputValue, type: "sent" },
       ]);
-      sendMessage(currentContactId, message);
+      sendMessage(currentContact.id, message);
       setInputValue("");
     }
   };
 
   const msgInptRef = createRef();
   useEffect(() => {
-    if (currentContactId) {
+    if (currentContact) {
       setMsgInptHeight(msgInptRef.current.offsetHeight);
     }
-  }, [currentContactId]);
+  }, [currentContact]);
   return (
     <>
-      {currentContactId ? (
+      {currentContact ? (
         <div
           ref={msgInptRef}
           className="d-flex end-0 bottom-0 w-75 position-fixed"

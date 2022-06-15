@@ -5,15 +5,15 @@ export const ConversationsContext = createContext();
 export function ConversationsProvider({ incomingMessage, children }) {
   const [conversations, setConversations] = useState([]);
   const [currentConversation, setCurrentConversation] = useState([]);
-  const [currentContactId, setCurrentContactId] = useState("");
+  const [currentContact, setCurrentContact] = useState(null)
   useEffect(() => {
-    if (incomingMessage == null || !currentContactId) return;
+    if (incomingMessage == null || !currentContact) return;
     setCurrentConversation([...currentConversation, incomingMessage]);
   }, [incomingMessage]);
 
   useEffect(() => {
-    if (!currentContactId) return;
-    fetch(`http://localhost:5782/api/users/contacts/${currentContactId}`, {
+    if (!currentContact) return;
+    fetch(`http://localhost:5782/api/users/contacts/${currentContact.id}`, {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")),
@@ -23,7 +23,7 @@ export function ConversationsProvider({ incomingMessage, children }) {
       .then((jres) =>
         setCurrentConversation([...currentConversation, ...jres.messages])
       );
-  }, [currentContactId]);
+  }, [currentContact]);
 
   const { Provider } = ConversationsContext;
   const value = {
@@ -31,8 +31,8 @@ export function ConversationsProvider({ incomingMessage, children }) {
     setConversations,
     currentConversation,
     setCurrentConversation,
-    currentContactId,
-    setCurrentContactId,
+    currentContact,
+    setCurrentContact,
   };
   return <Provider value={value}>{children}</Provider>;
 }
