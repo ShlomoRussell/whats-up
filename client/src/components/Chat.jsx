@@ -31,7 +31,7 @@ function Chat({ heightToMinus }) {
   }, [lastMessageRef.current]);
   return (
     <div>
-      <Stack className="d-flex align-self-end w-100 h-100" gap={3}>
+      <Stack className="d-flex align-self-end pt-4 w-100 h-100" gap={3}>
         {currentConversation.map((c, i) => {
           const lastMessage = currentConversation.length - 1 === i;
           return (

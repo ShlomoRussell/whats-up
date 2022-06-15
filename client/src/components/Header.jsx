@@ -1,21 +1,23 @@
-import React, { createRef, useEffect } from 'react'
-import Search from './Search';
+import React, { createRef, useContext, useEffect } from "react";
+import { ConversationsContext } from "../context/ConversationsProvider";
+import Search from "./Search";
 
-function Header({ setHeaderHeight }) {
-  const headerHeightRef = createRef();
-  useEffect(() => {
-    setHeaderHeight(headerHeightRef.current.offsetHeight);
-  }, []);
+function Header() {
+  const { currentContact } = useContext(ConversationsContext);
+
   return (
-    <nav ref={headerHeightRef} className="navbar bg-light">
-      <div className="container-fluid">
-        <a href="/" className="navbar-brand">
+    currentContact && (
+      <nav className="bg-light d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <div className="container-fluid">
+          <h4>{currentContact.name}</h4>
+          {/*  <a href="/" className="navbar-brand">
           <img src="what's-up.jpg" alt="company logo" />
         </a>
-        <Search />
-      </div>
-    </nav>
+      <Search />*/}
+        </div>
+      </nav>
+    )
   );
 }
 
-export default Header
+export default Header;
