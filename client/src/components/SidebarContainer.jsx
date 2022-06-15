@@ -1,7 +1,8 @@
 import React from "react";
-
+import { IoAdd } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Search from "./Search";
 import SidebarBody from "./SidebarBody";
 
 function SidebarContainer() {
@@ -9,13 +10,8 @@ function SidebarContainer() {
   
   return (
     <div className="d-flex flex-column align-items-stretch flex-shrink-0 w-25 bg-white ">
-      <Link
-        to={"/"}
-        className="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"
-      >
-        <h3>{user ? user.username : null}</h3>
-      </Link>
-     <SidebarBody />
+      <Search />
+      <SidebarBody />
     </div>
   );
 }

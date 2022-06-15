@@ -1,19 +1,31 @@
-import React from "react";
-import { Form, Button, FormControl } from "react-bootstrap";
+import React, { useRef } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { Form, Button, FormControl, InputGroup } from "react-bootstrap";
 
 function Search() {
-  function onSubmitHandler(e) {
+  const searchRef = useRef();
+  function onClickHandler(e) {
     e.preventDefault();
+    if (searchRef.current.value) {
+      console.log(searchRef.current.value);
+    }
   }
   return (
-    <Form onSubmit={onSubmitHandler} className="d-flex position-absolute bottom-25 end-0 w-25 me-3">
-      <FormControl
-        type="search"
-        placeholder="Find Friends"
-        className="me-2"
-        aria-label="Search"
-      />
-      <Button variant="outline-success">Search</Button>
+    <Form className="d-flex align-items-center flex-shrink-0 p-3  text-decoration-none border-bottom">
+      <InputGroup>
+        <Button variant="outline-secondary" id="button-addon1">
+          <AiOutlineSearch onClick={onClickHandler} />
+        </Button>
+
+        <FormControl
+          ref={searchRef}
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          type="search"
+          placeholder="Find Friends"
+          className="me-2"
+        />
+      </InputGroup>
     </Form>
   );
 }
