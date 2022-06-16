@@ -35,8 +35,8 @@ function SidebarHeader() {
       </div>
       <div className="ms-auto">
         <OverlayTrigger
-          placement="left"
-          overlay={<Tooltip id={`tooltip-left`}>Status</Tooltip>}
+          placement="bottom"
+          overlay={<Tooltip id={`tooltip-bottom`}>Status</Tooltip>}
         >
           <span className="m-1">
             <VscCircleLargeOutline className="mx-auto mt-2" />
@@ -51,8 +51,8 @@ function SidebarHeader() {
           </span>
         </OverlayTrigger>
         <OverlayTrigger
-          placement="right"
-          overlay={<Tooltip id={`tooltip-right`}>Menu</Tooltip>}
+          placement="bottom"
+          overlay={<Tooltip id={`tooltip-bottom`}>Menu</Tooltip>}
         >
           <span className="m-1">
             <BsThreeDots className="mx-auto mt-2" />
