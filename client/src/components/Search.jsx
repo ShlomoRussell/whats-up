@@ -11,13 +11,13 @@ function Search() {
     }
   }
   return (
-    <Form className="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
+    <Form className="d-flex align-items-center flex-shrink-0 p-2 border-bottom">
       <InputGroup>
         <Button
           variant="outline-secondary"
           id="button-addon1"
-          className="border-end-0"
-          style={{ pointerEvents: "none" }}
+          className="border-0"
+          style={{ pointerEvents: "none", backgroundColor: "#f4f4f4" }}
         >
           <AiOutlineSearch
             style={{ marginTop: "-0.25rem" }}
@@ -26,12 +26,13 @@ function Search() {
         </Button>
 
         <FormControl
+          style={{ backgroundColor: "#f4f4f4" }}
           ref={searchRef}
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
           type="search"
           placeholder="Find Friends"
-          className="me-2 border border-secondary border-start-0"
+          className="border-0"
         />
       </InputGroup>
     </Form>
