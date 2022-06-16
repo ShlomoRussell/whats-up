@@ -1,12 +1,12 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Chat from "./Chat";
-import Header from "./Header";
+import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import "../styles/scrollbar.css";
 
 function ChatContainer() {
   const [msgInptHeight, setMsgInptHeight] = useState(0);
-  
+  const [chatHeaderHeight, setChatHeaderHeight] = useState(0);
   return (
     <div
       className="d-flex flex-column flex-grow-1 overflow-auto"
@@ -17,8 +17,8 @@ function ChatContainer() {
         boxSizing: "border-box",
       }}
     >
-      <Header />
-      <Chat heightToMinus={msgInptHeight} />
+      <ChatHeader setChatHeaderHeight={setChatHeaderHeight} />
+      <Chat heightToMinus={msgInptHeight} chatHeaderHeight={chatHeaderHeight} />
       <MessageInput setMsgInptHeight={setMsgInptHeight} />
     </div>
   );

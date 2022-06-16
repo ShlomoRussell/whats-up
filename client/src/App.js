@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Login from "./components/Login";
 import { SocketProvider } from "./context/SocketProvider";
 import { Routes, Route } from "react-router-dom";

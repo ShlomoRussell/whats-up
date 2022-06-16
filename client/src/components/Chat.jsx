@@ -12,12 +12,11 @@ const styleTypes = {
   received: "0px 25px 15px 30px ",
 };
 
-function Chat({ heightToMinus }) {
+function Chat({ heightToMinus, chatHeaderHeight }) {
   const { currentConversation } = useContext(ConversationsContext);
   const lastMessageRef = useRef();
 
   useEffect(() => {
-  
     if (
       lastMessageRef.current &&
       lastMessageRef.current.offsetTop > window.innerHeight - heightToMinus
@@ -30,7 +29,7 @@ function Chat({ heightToMinus }) {
     }
   }, [lastMessageRef.current]);
   return (
-    <div>
+    <div style={{ paddingTop: chatHeaderHeight }}>
       <Stack className="d-flex align-self-end pt-4 w-100 h-100" gap={3}>
         {currentConversation.map((c, i) => {
           const lastMessage = currentConversation.length - 1 === i;
