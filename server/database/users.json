@@ -7,7 +7,7 @@
         "contacts": [
             {
                 "username": "Amit Licht",
-                "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
+                "id": "f85e3e48-c52c-4073-88e8-aa277a98f120",
                 "messages": [
                     {
                         "type": "sent",
@@ -232,27 +232,28 @@
         ]
     },
     {
-        "id": "060f9562-915a-4b0a-b5c3-044d0562bcd0",
-        "username": "Amit Licht",
-        "password": "3333",
-        "contacts": [
+      "username": "Amit Licht",
+      "password": "$2b$10$mGjq1Jdd6ACuRNK2C/btx.WIGYQHOfgxcOJ6t8wKOv0m8GFepYAI2",
+      "email": "somewhere@something.com",
+      "id": "f85e3e48-c52c-4073-88e8-aa277a98f120",
+      "contacts": [
+        {
+          "username": "Shlomo Russell",
+          "id": "36908432-652c-41e2-82ec-b45ee21893b1",
+          "messages": [
             {
-                "username": "Shlomo Russell",
-                "id": "bbc6620d-4865-4209-8aff-3d9bff4d1d57",
-                "messages": [
-                    {
-                        "type": "sent",
-                        "time": "",
-                        "message": "gheg"
-                    },
-                    {
-                        "type": "received",
-                        "time": "5:30",
-                        "message": "ghg"
-                    }
-                ]
+              "type": "sent",
+              "time": "",
+              "message": "gheg"
+            },
+            {
+              "type": "received",
+              "time": "5:30",
+              "message": "ghg"
             }
-        ]
+          ]
+        }
+      ]
     },
     {
         "username": "Leonard Cohen",
