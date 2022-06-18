@@ -3,8 +3,7 @@ const errorHandler = require("./middleware/error-handler");
 const ErrorModel = require("./models/error-model");
 const apiCtrl = require("./controllers/api-controller");
 const authctrl = require("./controllers/auth-controller");
-const cors = require("cors");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const PORT = process.env.PORT;
@@ -12,12 +11,11 @@ const app = express();
 const server = require("http").createServer(app);
 const { Server } = require("socket.io");
 
-
-app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+app.use(express.static("static"));
+app.use("images", express.static("static/images"));
 
 app.use("/auth", authctrl);
 
@@ -33,17 +31,14 @@ app.use(function (req, res, next) {
 
 app.use("/api/users", apiCtrl);
 
-
-/*app.get('*', function(req, res) {
-    res.sendFile(__dirname + '/server/static/index.html');
-});*/
+app.get("*", function (req, res) {
+  res.sendFile(require.main.path + "/static/index.html");
+});
 
 app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
 
 const io = new Server(server, { cors: "localhost:3000" });
-
-
 
 io.use(function (socket, next) {
   try {
@@ -52,16 +47,15 @@ io.use(function (socket, next) {
     console.log(payload);
     next();
   } catch (ex) {
-    next(ex)
+    next(ex);
   }
 });
 
 io.on("connection", (socket) => {
-  const id = socket.handshake.query.id
-  socket.join(id)
+  const id = socket.handshake.query.id;
+  socket.join(id);
   socket.on("send-message", (sendToID, message) => {
     socket.to(sendToID).volatile.emit("receive-message", message);
-    
   });
 
   console.log(`You're connect with the id:${socket.id}`);

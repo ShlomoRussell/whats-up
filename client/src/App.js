@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     if (token == null) return;
-    fetch("http://localhost:5782/api/users/contacts", {
+    fetch("/api/users/contacts", {
       headers: { authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
     callback
   ) => {
     try {
-      const res = await fetch("http://localhost:5782/auth/login", {
+      const res = await fetch("/auth/login", {
         method: "POST",
         body: JSON.stringify({
           username: username,
@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
   };*/
   const signup = async (newUser, onSubmitId, onSubmitToken, callback) => {
     try {
-      const res = await fetch("http://localhost:5782/auth/register", {
+      const res = await fetch("/auth/register", {
         method: "POST",
         body: JSON.stringify(newUser),
         headers: {

@@ -13,7 +13,7 @@ export function ConversationsProvider({ incomingMessage, children }) {
 
   useEffect(() => {
     if (!currentContact) return;
-    fetch(`http://localhost:5782/api/users/contacts/${currentContact.id}`, {
+    fetch(`/api/users/contacts/${currentContact.id}`, {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(localStorage.getItem("what's-up-token")),
@@ -21,7 +21,7 @@ export function ConversationsProvider({ incomingMessage, children }) {
     })
       .then((res) => res.json())
       .then((jres) =>
-        setCurrentConversation([...currentConversation, ...jres.messages])
+        setCurrentConversation([...jres.messages])
       );
   }, [currentContact]);
 
