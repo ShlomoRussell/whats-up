@@ -33,8 +33,11 @@ function Contact({ contact }) {
             width="20%"
             contactProfilePic={contact.image}
           />
-          <div style={{ minWidth: 0, flexShrink: 15 }} title={contact.username}>
-            <h6 className="m-1 overflow-hidden text-truncate">
+          <div style={{ minWidth: 0, flexShrink: 15 ,textAlign:"left"}}>
+            <h6
+              title={contact.username}
+              className="m-1 overflow-hidden text-truncate"
+            >
               {contact.username}
             </h6>
             <div
