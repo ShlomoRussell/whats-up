@@ -12,9 +12,16 @@ function ChatHeader({ setChatHeaderHeight }) {
   }, [currentContact]);
   return (
     currentContact && (
-      <nav ref={headerHeightRef} className="bg-light d-flex align-items-center flex-shrink-0 p-2 link-dark text-decoration-none border-bottom position-fixed top-0 end-0 w-75">
+      <nav
+        ref={headerHeightRef}
+        className="bg-light d-flex align-items-center flex-shrink-0 p-2 link-dark text-decoration-none border-bottom position-fixed top-0 end-0 w-75"
+      >
         <div style={{ height: "2.75rem" }} className="d-flex w-100">
-          <ContactProfilePic />
+          <ContactProfilePic
+            width="2.75rem"
+            height="2.75rem"
+            contactProfilePic={currentContact.image}
+          />
           <h5 className="my-2">{currentContact.name}</h5>
           <img
             src="what's-up.jpg"

@@ -5,22 +5,22 @@ import { useAuth } from "../context/AuthContext";
 import { BsPersonCircle } from "react-icons/bs";
 import Offcanvas from "./SidebarOffcanvas";
 
-function UserProfilePic() {
+function UserProfilePic({ offcanvasHeaderHeight }) {
   const { user } = useAuth();
   const [isImg, setIsImg] = useState(true);
   const [show, setShow] = useState(false);
-  const toggleOffcanvas = () => {
+  const toggleOffcanvas = (e) => {
+   
+    
     setShow(!show);
-  }
- 
+  };
+
   return (
-    <div
-      onClick={toggleOffcanvas}
-      style={{ height: "2.75rem", width: "2.75rem" }}
-    >
+    <div style={{ height: "2.75rem", width: "2.75rem" }}>
       {user && isImg ? (
         <Image
-          src={"/images/" + user.image}
+          onClick={toggleOffcanvas}
+          src={"/images/" + user["image"]}
           onError={() => setIsImg(false)}
           roundedCircle={true}
           className="mh-100 mw-100"
@@ -32,6 +32,7 @@ function UserProfilePic() {
         >
           <span className="m-1">
             <BsPersonCircle
+              onClick={toggleOffcanvas}
               className="h-75 w-75 my-1 border-0"
               style={{
                 backgroundColor: "#bfc2c6",
@@ -42,7 +43,12 @@ function UserProfilePic() {
           </span>
         </OverlayTrigger>
       )}
-      <Offcanvas show={show} toggleOffcanvas={toggleOffcanvas} />
+      <Offcanvas
+        show={show}
+        toggleOffcanvas={toggleOffcanvas}
+        offcanvasHeaderHeight={offcanvasHeaderHeight}
+        imgSrc={user && isImg ? "/images/" + user["image"] : isImg}
+      />
     </div>
   );
 }

@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { Image } from "react-bootstrap";
 import { BsPersonCircle } from "react-icons/bs";
 
-function ContactProfilePic({ contactProfilePic }) {
+function ContactProfilePic({ contactProfilePic, width, height }) {
+  const [isImg, setIsImg] = useState(false);
+  useEffect(() => {
+    if (contactProfilePic) {
+      setIsImg(true);
+    }
+  }, [contactProfilePic]);
   return (
-    <div style={{ width: "2.75rem", height: "2.75rem" }}>
-      {contactProfilePic ? (
+    <div className="mx-3" style={{ width: width, height: height }}>
+      {isImg ? (
         <Image
-          src={contactProfilePic}
+          onError={() => setIsImg(false)}
+          src={"/images/" + contactProfilePic}
           roundedCircle={true}
           className="mh-100 mw-100"
         />
