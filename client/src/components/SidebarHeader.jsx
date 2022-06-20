@@ -1,5 +1,4 @@
 import React,{ useRef }  from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { IoAdd } from "react-icons/io5";
 import { VscCircleLargeOutline } from "react-icons/vsc";
 import UserProfilePic from "./UserProfilePic";
@@ -20,28 +19,18 @@ function SidebarHeader({searchHeight}) {
       className="d-flex justify-content p-2 border-bottom"
     >
       <UserProfilePic
-        offcanvasHeaderHeight={
-          searchHeight + sidebarHeaderHeight
-        }
+        offcanvasHeaderHeight={searchHeight + sidebarHeaderHeight}
       />
       <div className="ms-auto">
-        <OverlayTrigger
-          placement="bottom"
-          overlay={<Tooltip id={`tooltip-bottom`}>Status</Tooltip>}
-        >
-          <span className="m-1">
-            <VscCircleLargeOutline className="mx-auto mt-2" />
-          </span>
-        </OverlayTrigger>
-        <OverlayTrigger
-          placement="bottom"
-          overlay={<Tooltip id={`tooltip-bottom`}>New chat</Tooltip>}
-        >
-          <span className="m-1">
-            <IoAdd className="mx-auto mt-2" />
-          </span>
-        </OverlayTrigger>
-       <UserMenuDropdown/>
+        <span title="Status" className="m-1">
+          <VscCircleLargeOutline className="mx-auto mt-2" />
+        </span>
+
+        <span title="New chat" className="m-1">
+          <IoAdd className="mx-auto mt-2" />
+        </span>
+
+        <UserMenuDropdown />
       </div>
     </div>
   );
