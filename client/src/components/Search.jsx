@@ -1,9 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Form, Button, FormControl, InputGroup } from "react-bootstrap";
 
-function Search() {
+function Search({setSearchHeight}) {
   const searchRef = useRef();
+  const searchHeightRef = useRef();
+  useEffect(() => {
+   setSearchHeight(searchHeightRef.current.offsetHeight);
+  }, [])
+  
   function onClickHandler(e) {
     e.preventDefault();
     if (searchRef.current.value) {
@@ -11,7 +16,10 @@ function Search() {
     }
   }
   return (
-    <Form className="d-flex align-items-center flex-shrink-0 p-2 border-bottom">
+    <Form
+      ref={searchHeightRef}
+      className="d-flex align-items-center flex-shrink-0 p-2 border-bottom"
+    >
       <InputGroup>
         <Button
           variant="outline-secondary"

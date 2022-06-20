@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { BsPersonCircle } from "react-icons/bs";
-import Offcanvas from "./SidebarOffcanvas";
+import ProfileOffcanvas from "./ProfileOffcanvas";
 
 function UserProfilePic({ offcanvasHeaderHeight }) {
   const { user } = useAuth();
@@ -43,7 +43,7 @@ function UserProfilePic({ offcanvasHeaderHeight }) {
           </span>
         </OverlayTrigger>
       )}
-      <Offcanvas
+      <ProfileOffcanvas
         show={show}
         toggleOffcanvas={toggleOffcanvas}
         offcanvasHeaderHeight={offcanvasHeaderHeight}
