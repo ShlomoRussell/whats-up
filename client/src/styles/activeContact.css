@@ -1,0 +1,16 @@
+.btn.btn-primary:hover {
+  background-color: #f8f4f4 !important;
+  color: black !important;
+  border-color: rgba(0, 0, 0, 0.125) !important;
+  box-shadow: none !important;
+}
+.list-group-item.active {
+  background-color: #ebe4e4 !important;
+  color: black !important;
+  border-color: rgba(0, 0, 0, 0.125) !important;
+  box-shadow: none !important;
+}
+.list-group-item.active:focus:hover:active {
+  box-shadow: none !important;
+  background-color: #ebe4e4  !important;
+}

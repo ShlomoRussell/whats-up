@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { ConversationsContext } from "../context/ConversationsProvider";
 import ContactProfilePic from "./ContactProfilePic";
+import "../styles/activeContact.css";
 
 function Contact({ contact }) {
   const { currentContact, setCurrentContact } = useContext(
@@ -10,7 +11,11 @@ function Contact({ contact }) {
 
   const handleClick = (e) => {
     if (!currentContact || currentContact.id !== contact.id) {
-      setCurrentContact({ id: contact.id, name: contact.username, image: contact.image });
+      setCurrentContact({
+        id: contact.id,
+        name: contact.username,
+        image: contact.image,
+      });
     }
   };
 
@@ -18,8 +23,9 @@ function Contact({ contact }) {
     contact && (
       <Button
         onClick={handleClick}
-        variant="link"
-        className="list-group-item list-group-item-action py-3 lh-tight w-100"
+        className={`list-group-item py-3 lh-tight w-100 ${
+          currentContact && currentContact.id === contact.id ? "active" : ""
+        }`}
       >
         <div className="d-flex  w-100">
           <ContactProfilePic

@@ -11,7 +11,7 @@ function ContactProfilePic({ contactProfilePic, width, height }) {
     }
   }, [contactProfilePic]);
   return (
-    <div className="mx-3" style={{ width: width, height: height }}>
+    <div className="me-3" style={{ width: width, height: height }}>
       {isImg ? (
         <Image
           onError={() => setIsImg(false)}
