@@ -37,12 +37,11 @@ export function AuthProvider({ children }) {
     }
   };
 
-  /*let signout = (callback) => {
-    return fakeAuthProvider.signout(() => {
-      setUser(null);
-      callback();
-    });
-  };*/
+  const signout = () => {
+    localStorage.clear() 
+    setUser(null)
+    window.history.go(0);
+  };
   const signup = async (newUser, onSubmitId, onSubmitToken, callback) => {
     try {
       const res = await fetch("/auth/register", {
@@ -73,7 +72,7 @@ export function AuthProvider({ children }) {
     signup,
     signin,
     authError,
-    //signout,
+    signout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
