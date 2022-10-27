@@ -1,17 +1,16 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useAuth } from "../context/AuthContext";
 import { BsPersonCircle } from "react-icons/bs";
 import ProfileOffcanvas from "./ProfileOffcanvas";
+import { selectCurrentUser } from "../../auth/redux/authSlice";
 
 function UserProfilePic({ offcanvasHeaderHeight }) {
-  const { user } = useAuth();
+  const user = useSelector(selectCurrentUser);
   const [isImg, setIsImg] = useState(true);
   const [show, setShow] = useState(false);
   const toggleOffcanvas = (e) => {
-   
-    
     setShow(!show);
   };
 

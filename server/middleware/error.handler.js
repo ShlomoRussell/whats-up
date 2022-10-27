@@ -1,6 +1,6 @@
-const ErrorModel = require("../models/error-model");
+import ErrorModel from "../models/error.model.js";
 
-function errorHanler(err, req, res, next){
+export default function errorHanler(err, req, res, next){
     if(err instanceof Error){
         res.status(err.status || 500).send(err.message);
         return;
@@ -13,4 +13,3 @@ function errorHanler(err, req, res, next){
     next();
 }
 
-module.exports = errorHanler;

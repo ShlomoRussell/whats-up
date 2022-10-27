@@ -1,38 +1,47 @@
-import React, { createRef } from "react";
+import React, { createRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useLoginMutation } from "../redux/authApiSlice";
+import { selectCurrentToken, setCredentials } from "../redux/authSlice";
+import { useSelector } from "react-redux";
 
-function Login({ token, onSubmitId, onSubmitToken }) {
+function Login() {
   const usernameRef = createRef();
   const passwordRef = createRef();
+  const token = useSelector(selectCurrentToken);
 
-  let navigate = useNavigate();
-  let location = useLocation();
+  const [login] = useLoginMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [loginError, setLoginError] = useState();
 
-  let { signin, authError } = useAuth();
+  const from = location.state ? location.state.from.pathname : "/";
 
-  let from = location.state ? location.state.from.pathname : "/";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    signin(
-      {
+    try {
+      const res = await login({
         username: usernameRef.current.value,
         password: passwordRef.current.value,
-      },
-      onSubmitId,
-      onSubmitToken,
-      () => {
+      });
+      if (res.data.token) {
+        dispatch(setCredentials(res.data));
         navigate(from, { replace: true });
       }
-    );
+    } catch (error) {
+      if (!error.originalStatus) {
+        setLoginError("Having trouble connecting to server please try again!");
+      } else {
+        setLoginError(error.data);
+      }
+    }
   };
   if (token) return navigate("/");
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
-      {authError && <Alert variant={"warning"}>{authError}</Alert>}
+      {loginError && <Alert variant={"warning"}>{loginError}</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="username">
           <Form.Label>Username</Form.Label>

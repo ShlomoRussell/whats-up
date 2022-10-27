@@ -1,40 +1,53 @@
 import React, { createRef } from "react";
+import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
+import { useRegisterMutation } from "../redux/authApiSlice";
 
 function Register({ onSubmitId, onSubmitToken }) {
   const usernameRef = createRef();
   const passwordRef = createRef();
   const confirmRef = createRef();
   const emailRef = createRef();
+  const [register] = useRegisterMutation();
+  const [registerError, setRegisterError] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const { signup, authError } = useAuth();
-  let navigate = useNavigate();
-  let location = useLocation();
+  const from = location.state ? location.state.from.pathname : "/";
 
-  let from = location.state ? location.state.from.pathname : "/";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    signup(
-      {
+    try {
+      const res = await register({
         username: usernameRef.current.value,
         password: passwordRef.current.value,
         confirmPassword: confirmRef.current.value,
         email: emailRef.current.value,
-      },
-      onSubmitId,
-      onSubmitToken,
-      () => {
+      });
+      if (res.data.token) {
+        onSubmitId(res.data.id);
+        onSubmitToken(res.data.token);
         navigate(from, { replace: true });
       }
-    );
+    } catch (error) {
+      if (error.originalStatus !== 500) {
+        setRegisterError(
+          "Having trouble connecting to server please try again!"
+        );
+      } else {
+        setRegisterError(error.data);
+      }
+    }
   };
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
-      {authError && <Alert variant={"warning"} style={{textTransform:"capitalize"}}>{authError}</Alert>}
+      {registerError && (
+        <Alert variant={"warning"} style={{ textTransform: "capitalize" }}>
+          {registerError}
+        </Alert>
+      )}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>

@@ -1,5 +1,5 @@
 
-class MessageModel{
+export default class MessageModel{
     id; // uuid
     from;    // user id
     to;      // user id
@@ -15,4 +15,3 @@ class MessageModel{
     }
 }
 
-module.exports = MessageModel;

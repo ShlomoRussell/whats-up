@@ -1,6 +1,6 @@
 import React from "react";
-import ChatContainer from "./ChatContainer";
-import SidebarContainer from "./SidebarContainer";
+import ChatContainer from "../features/chat/components/ChatContainer";
+import SidebarContainer from "../features/sidebar/components/SidebarContainer";
 
 function PageContainer() {
   return (

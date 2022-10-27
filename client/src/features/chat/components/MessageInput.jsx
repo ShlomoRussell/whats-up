@@ -1,8 +1,8 @@
 import React, { useContext, createRef, useEffect, useState } from "react";
-import { SocketContext } from "../context/SocketProvider";
-import { ConversationsContext } from "../context/ConversationsProvider";
+import { SocketContext } from "../../../context/SocketProvider";
+import { ConversationsContext } from "../../../context/ConversationsProvider";
 import { Form } from "react-bootstrap";
-import SendMessageBtn from "./SendMessageBtn";
+import SendMessageBtn from "../../../components/SendMessageBtn";
 
 function MessageInput({ setMsgInptHeight }) {
   const {

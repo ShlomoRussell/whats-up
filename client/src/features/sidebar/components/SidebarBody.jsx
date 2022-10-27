@@ -1,8 +1,8 @@
 import React from 'react'
-import { useAuth } from '../context/AuthContext';
-import Contact from "./Contact";
+import { useAuth } from '../../../context/AuthContext';
+import Contact from "../../../components/Contact";
 import { v4 as uuidv4 } from "uuid";
-import "../styles/scrollbar.css";
+import "../../../styles/scrollbar.css";
 
 export default function SidebarBody() {
   const { user } = useAuth()

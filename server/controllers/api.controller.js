@@ -1,25 +1,20 @@
-const ErrorModel = require("../models/error-model");
-const apiCtrl = require("express").Router();
-const dal = require("../DAL/dal");
-const jwt = require("jsonwebtoken");
+import ErrorModel from "../models/error.model.js";
+import { Router } from "express";
+
+const apiCtrl = Router();
 
 apiCtrl.get("/contacts", async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const { username } = jwt.decode(token);
-  const user = await dal.getUserByUsernameAsync(username);
-  console.log(user)
+  const user = await getUserByUsernameAsync(username);
+  console.log(user);
   res.json(user);
 });
 
 apiCtrl.get("/contacts/:contactId", async (req, res) => {
   const contactId = req.params.contactId;
-  const token = req.headers.authorization.split(" ")[1];
 
-  const { id } = jwt.decode(token);
-
-  const result = await dal
-    .getUserById(id)
-    .then((res) => res["contacts"].find((c) => c.id === contactId));
+  const result = await getUserById(id).then((res) =>
+    res["contacts"].find((c) => c.id === contactId)
+  );
   res.send(result);
 });
 
@@ -43,4 +38,4 @@ apiCtrl.delete("/:id", async (req, res) => {
   res.sendStatus(204);
 });
 
-module.exports = apiCtrl;
+export default apiCtrl;

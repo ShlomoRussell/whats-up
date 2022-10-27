@@ -1,4 +1,4 @@
-import React,{ useRef }  from "react";
+import React, { useRef } from "react";
 import { IoAdd } from "react-icons/io5";
 import { VscCircleLargeOutline } from "react-icons/vsc";
 import UserProfilePic from "./UserProfilePic";
@@ -6,13 +6,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UserMenuDropdown from "./UserMenuDropdown";
 
-
-function SidebarHeader({searchHeight}) {
-  const sidebarHeaderHeightRef = useRef()
-  const [sidebarHeaderHeight,setSidebarHeaderHeight]=useState(0)
+function SidebarHeader({ searchHeight }) {
+  const sidebarHeaderHeightRef = useRef();
+  const [sidebarHeaderHeight, setSidebarHeaderHeight] = useState(0);
   useEffect(() => {
-    setSidebarHeaderHeight(sidebarHeaderHeightRef.current.offsetHeight)
-  })
+    setSidebarHeaderHeight(sidebarHeaderHeightRef.current.offsetHeight);
+  });
   return (
     <div
       ref={sidebarHeaderHeightRef}

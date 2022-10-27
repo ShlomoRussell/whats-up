@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Stack } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import { ConversationsContext } from "../context/ConversationsProvider";
+import { ConversationsContext } from "../../../context/ConversationsProvider";
 
 const bootstrapClassTypes = {
   sent: "bg-info bg-gradient align-self-end me-3",

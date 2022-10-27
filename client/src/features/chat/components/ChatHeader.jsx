@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useEffect } from "react";
-import ContactProfilePic from "./ContactProfilePic";
-import { ConversationsContext } from "../context/ConversationsProvider";
+import ContactProfilePic from "../../../components/ContactProfilePic";
+import { ConversationsContext } from "../../../context/ConversationsProvider";
 
 function ChatHeader({ setChatHeaderHeight }) {
   const { currentContact } = useContext(ConversationsContext);

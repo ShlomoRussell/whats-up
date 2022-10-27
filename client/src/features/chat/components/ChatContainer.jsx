@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Chat from "./Chat";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
-import "../styles/scrollbar.css";
+import "../../../styles/scrollbar.css";
 
 function ChatContainer() {
   const [msgInptHeight, setMsgInptHeight] = useState(0);
