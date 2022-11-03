@@ -1,11 +1,14 @@
 import { apiSlice } from "../app/apiSlice";
 import { getSocket } from "./socket";
-import { SocketEvents } from "./socketEvents.enum";
+import { SocketEvents } from "./socketEvent";
+import { store } from "../app/store";
+import { setCurrentConversation } from "../features/chat/redux/chatSlice";
+import { setIncomingNotifications } from "../features/sidebar/redux/sideBarSlice";
 
 const socketApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     connectSocket: builder.query({
-      queryFn: () => ({ data: [] }),
+      queryFn: () => ({ data }),
       async onCacheEntryAdded(
         arg,
         { dispatch, cacheDataLoaded, cacheEntryRemoved }
@@ -13,18 +16,18 @@ const socketApiSlice = apiSlice.injectEndpoints({
         try {
           await cacheDataLoaded;
           const socket = getSocket();
-          socket.on(SocketEvents.updateUsersVacations, () => {
-            dispatch(setVacationIsUpdated(true));
-          });
-          socket.on(SocketEvents.followersUpdated, (id) => {
-            const { refetch: refetchFollowers } = dispatch(
-              usersVacationsApi.endpoints.getVacationFollowers.initiate(id)
-            );
-            const { refetch: refetchReports } = dispatch(
-              reportApiSlice.endpoints.getReports.initiate(null)
-            );
-            refetchReports();
-            refetchFollowers();
+          socket.on(SocketEvents.receiveMessage, (incoming) => {
+            const { id } = store.getState().chat;
+            if (incoming.from === id) {
+              dispatch(
+                setCurrentConversation({
+                  message: incoming.message,
+                  type: "received",
+                })
+              );
+            } else {
+              dispatch(setIncomingNotifications(incoming.from));
+            }
           });
         } catch (error) {
           console.log(error);

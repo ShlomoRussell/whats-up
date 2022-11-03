@@ -1,21 +1,26 @@
-import React, { useContext } from "react";
-import { Button } from "react-bootstrap";
-import { ConversationsContext } from "../context/ConversationsProvider";
-import ContactProfilePic from "./ContactProfilePic";
+import React from "react";
+import { Badge, Button } from "react-bootstrap";
+import ContactProfilePic from "../../chat/components/ContactProfilePic";
 import "../styles/activeContact.css";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentChat, setCurrentChat } from "../../chat/redux/chatSlice";
+import { selectNotificationById } from "../redux/sideBarSlice";
 
 function Contact({ contact }) {
-  const { currentContact, setCurrentContact } = useContext(
-    ConversationsContext
+  const dispatch = useDispatch();
+  const currentContact = useSelector(selectCurrentChat);
+  const notification = useSelector((state) =>
+    selectNotificationById(state, currentContact.id)
   );
-
   const handleClick = (e) => {
     if (!currentContact || currentContact.id !== contact.id) {
-      setCurrentContact({
-        id: contact.id,
-        name: contact.username,
-        image: contact.image,
-      });
+      dispatch(
+        setCurrentChat({
+          id: contact.id,
+          name: contact.username,
+          image: contact.image,
+        })
+      );
     }
   };
 
@@ -33,7 +38,7 @@ function Contact({ contact }) {
             width="20%"
             contactProfilePic={contact.image}
           />
-          <div style={{ minWidth: 0, flexShrink: 15 ,textAlign:"left"}}>
+          <div style={{ minWidth: 0, flexShrink: 15, textAlign: "left" }}>
             <h6
               title={contact.username}
               className="m-1 overflow-hidden text-truncate"
@@ -52,6 +57,9 @@ function Contact({ contact }) {
               {contact.messages[contact.messages.length - 1].time}
             </small>
           </div>
+          <Badge pill style={{ backgroundClip: "#25d366" }}>
+            {notification.length}
+          </Badge>
         </div>
       </Button>
     )

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app/App";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,9 +11,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

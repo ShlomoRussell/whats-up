@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Login from "../features/auth/components/Login";
 import { SocketProvider } from "../context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
-import { RequireAuth, useAuth } from "../context/AuthContext";
+import { RequireAuth } from "../features/auth/services/RequireAuth";
 import Register from "../features/auth/components/Register";
 import PageContainer from "../components/PageContainer";
 import { useSelector, useDispatch } from "react-redux";

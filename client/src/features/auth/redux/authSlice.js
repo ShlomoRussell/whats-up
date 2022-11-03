@@ -6,6 +6,7 @@ const authInitialState = () => ({
   username: null,
   image: null,
   isAdmin: false,
+  contacts: [],
   token: JSON.parse(localStorage.getItem("what's-up")) || null,
 });
 
@@ -37,3 +38,4 @@ export const selectCurrentUser = (state) => state.auth;
 export const selectCurrentToken = (state) => state.auth.token;
 export const selectIsAdmin = (state) => state.auth.isAdmin;
 export const selectCurrentUserId = (state) => state.auth.id;
+export const selectContacts = (state) => state.auth.contacts;

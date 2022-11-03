@@ -1,9 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { IoAdd } from "react-icons/io5";
 import { VscCircleLargeOutline } from "react-icons/vsc";
 import UserProfilePic from "./UserProfilePic";
-import { useEffect } from "react";
-import { useState } from "react";
 import UserMenuDropdown from "./UserMenuDropdown";
 
 function SidebarHeader({ searchHeight }) {

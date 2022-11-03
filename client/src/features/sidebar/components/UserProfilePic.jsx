@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BsPersonCircle } from "react-icons/bs";

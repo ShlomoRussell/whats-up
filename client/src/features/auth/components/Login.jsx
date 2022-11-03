@@ -1,10 +1,9 @@
 import React, { createRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/authApiSlice";
 import { selectCurrentToken, setCredentials } from "../redux/authSlice";
-import { useSelector } from "react-redux";
 
 function Login() {
   const usernameRef = createRef();

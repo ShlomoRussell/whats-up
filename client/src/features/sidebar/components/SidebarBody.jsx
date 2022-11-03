@@ -1,19 +1,20 @@
-import React from 'react'
-import { useAuth } from '../../../context/AuthContext';
-import Contact from "../../../components/Contact";
+import React from "react";
+import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
 import "../../../styles/scrollbar.css";
+import { useSelector } from "react-redux";
+import { selectContacts } from "../../auth/redux/authSlice";
 
 export default function SidebarBody() {
-  const { user } = useAuth()
+  const contacts = useSelector(selectContacts);
   return (
     <div
       style={{ overflowY: "auto" }}
       className="list-group list-group-flush border-bottom vh-100 border-end border-top "
     >
-      {user
-        ? user["contacts"].map((c) => <Contact key={uuidv4()} contact={c} />)
-        : null}
+      {contacts.map((c) => (
+        <Contact key={uuidv4()} contact={c} />
+      ))}
     </div>
   );
 }

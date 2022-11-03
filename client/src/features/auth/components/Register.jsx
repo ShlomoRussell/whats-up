@@ -1,19 +1,21 @@
-import React, { createRef } from "react";
-import { useState } from "react";
+import React, { createRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/AuthContext";
 import { useRegisterMutation } from "../redux/authApiSlice";
+import { setCredentials } from "../redux/authSlice";
 
-function Register({ onSubmitId, onSubmitToken }) {
+function Register() {
   const usernameRef = createRef();
   const passwordRef = createRef();
   const confirmRef = createRef();
   const emailRef = createRef();
-  const [register] = useRegisterMutation();
-  const [registerError, setRegisterError] = useState();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const [register] = useRegisterMutation();
+
+  const [registerError, setRegisterError] = useState();
 
   const from = location.state ? location.state.from.pathname : "/";
 
@@ -27,8 +29,7 @@ function Register({ onSubmitId, onSubmitToken }) {
         email: emailRef.current.value,
       });
       if (res.data.token) {
-        onSubmitId(res.data.id);
-        onSubmitToken(res.data.token);
+        dispatch(setCredentials(res.data));
         navigate(from, { replace: true });
       }
     } catch (error) {

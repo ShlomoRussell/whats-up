@@ -1,19 +1,21 @@
 import React, { useContext, createRef, useEffect, useState } from "react";
-import { SocketContext } from "../../../context/SocketProvider";
 import { ConversationsContext } from "../../../context/ConversationsProvider";
 import { Form } from "react-bootstrap";
-import SendMessageBtn from "../../../components/SendMessageBtn";
+import SendMessageBtn from "./SendMessageBtn";
+import { getSocket } from "../../../socket/socket";
+import { SocketEvents } from "../../../socket/socketEvent";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentContactId,
+  setCurrentConversation,
+} from "../redux/chatSlice";
 
 function MessageInput({ setMsgInptHeight }) {
-  const {
-    currentConversation,
-    setCurrentConversation,
-    currentContact,
-  } = useContext(ConversationsContext);
-  const { sendMessage } = useContext(SocketContext);
+  const { currentConversation } = useContext(ConversationsContext);
   const [inputValue, setInputValue] = useState("");
+  const currentContactId = useSelector(selectCurrentContactId);
   const messageRef = createRef();
-
+  const socket = getSocket();
   const handleSubmit = (e) => {
     e.preventDefault();
     const message = messageRef.current.value;
@@ -22,20 +24,20 @@ function MessageInput({ setMsgInptHeight }) {
         ...currentConversation,
         { message: inputValue, type: "sent" },
       ]);
-      sendMessage(currentContact.id, message);
+      socket.emit(SocketEvents.sendMesssage, currentContactId, message);
       setInputValue("");
     }
   };
 
   const msgInptRef = createRef();
   useEffect(() => {
-    if (currentContact) {
+    if (currentContactId) {
       setMsgInptHeight(msgInptRef.current.offsetHeight);
     }
-  }, [currentContact]);
+  }, [currentContactId]);
   return (
     <>
-      {currentContact ? (
+      {currentContactId ? (
         <div
           ref={msgInptRef}
           className="d-flex end-0 bottom-0 w-75 position-fixed"

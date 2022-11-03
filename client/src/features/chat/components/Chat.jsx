@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Stack } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { ConversationsContext } from "../../../context/ConversationsProvider";
+import { selectCurrentConversation } from "../redux/chatSlice";
 
 const bootstrapClassTypes = {
   sent: "bg-info bg-gradient align-self-end me-3",
@@ -13,7 +14,7 @@ const styleTypes = {
 };
 
 function Chat({ heightToMinus, chatHeaderHeight }) {
-  const { currentConversation } = useContext(ConversationsContext);
+  const currentConversation = useSelector(selectCurrentConversation);
   const lastMessageRef = useRef();
 
   useEffect(() => {
