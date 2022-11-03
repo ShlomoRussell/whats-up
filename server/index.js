@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   const id = socket.handshake.query.id;
   socket.join(id);
   socket.on("send-message", (sendToID, message) => {
-    socket.to(sendToID).volatile.emit("receive-message", message);
+    socket.to(sendToID).volatile.emit("receive-message", { from: id, message });
   });
 
   console.log(`You're connect with the id:${socket.id}`);
