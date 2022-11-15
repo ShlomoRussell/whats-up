@@ -27,20 +27,7 @@ export async function runQuery(query, params) {
   return queryAsync(query, params);
 }
 
-const getUsersMessages = (userId) => {};
 
-const getContacts = (username) => {};
 
-const updateUserAsync = async (userId, changedParams) => {
-  const users = await getAllUsersAsync();
-  const idx = users.findIndex((u) => u.id === userId);
-  if (idx === -1) return null;
-  users[idx] = { ...users[idx], ...changedParams };
-  dal.saveAllUsersAsync(users);
-  return users[idx];
-};
+ 
 
-const deleteUserAsync = (id) =>
-  getAllUsersAsync()
-    .then((users) => users.filter((u) => u.id !== id))
-    .then((res) => dal.saveAllUsersAsync(res));
