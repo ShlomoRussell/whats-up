@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../auth/redux/authSlice";
+import ThreeDotMenuIcon from "./ThreeDotMenuIcon";
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
   <span
@@ -12,24 +13,7 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
       onClick(e);
     }}
   >
-    <svg
-      style={{ color: "#54656f" }}
-      className="mt-2"
-      viewBox="0 0 24 24"
-      height="24"
-      width="24"
-      preserveAspectRatio="xMidYMid meet"
-      version="1.1"
-      x="0px"
-      y="0px"
-      enableBackground="new 0 0 24 24"
-    >
-      <path
-        fill="currentColor"
-        d="M12,7c1.104,0,2-0.896,2-2c0-1.105-0.895-2-2-2c-1.104,0-2,0.894-2,2 C10,6.105,10.895,7,12,7z M12,9c-1.104,0-2,0.894-2,2c0,1.104,0.895,2,2,2c1.104,0,2-0.896,2-2C13.999,9.895,13.104,9,12,9z M12,15 c-1.104,0-2,0.894-2,2c0,1.104,0.895,2,2,2c1.104,0,2-0.896,2-2C13.999,15.894,13.104,15,12,15z"
-      ></path>
-    </svg>
-    {/* <BsThreeDots className="mx-auto mt-2" /> */}
+    <ThreeDotMenuIcon />
   </span>
 ));
 
@@ -43,9 +27,9 @@ function UserMenuDropdown() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu align="start">
-        <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-        <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-        <Dropdown.Item eventKey="3">Orange</Dropdown.Item>
+        <Dropdown.Item eventKey="1">New Group</Dropdown.Item>
+        <Dropdown.Item eventKey="2">Starred Messages</Dropdown.Item>
+        <Dropdown.Item eventKey="3">Settings</Dropdown.Item>
         <Dropdown.Item eventKey="4" onClick={onLogout}>
           Log out
         </Dropdown.Item>
