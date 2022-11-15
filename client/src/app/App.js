@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Login from "../features/auth/components/Login";
-import { SocketProvider } from "../context/SocketProvider";
 import { Routes, Route } from "react-router-dom";
 import { RequireAuth } from "../features/auth/services/RequireAuth";
 import Register from "../features/auth/components/Register";
@@ -12,8 +11,11 @@ import { authApiSlice } from "../features/auth/redux/authApiSlice";
 function App() {
   const token = useSelector(selectCurrentToken);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (token === null) return;
+    if (token === null) {
+      return;
+    }
     dispatch(authApiSlice.endpoints.onRefresh.initiate());
   }, [token]);
 
@@ -25,9 +27,7 @@ function App() {
         path="/"
         element={
           <RequireAuth token={token}>
-            <SocketProvider>
-              <PageContainer />
-            </SocketProvider>
+            <PageContainer />
           </RequireAuth>
         }
       />
