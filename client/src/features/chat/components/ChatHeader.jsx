@@ -1,10 +1,10 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ContactProfilePic from "./ContactProfilePic";
 import { selectCurrentChat } from "../redux/chatSlice";
 
 function ChatHeader({ setChatHeaderHeight }) {
-  const currentContact  = useSelector(selectCurrentChat);
+  const currentContact = useSelector(selectCurrentChat);
   const headerHeightRef = useRef();
   useEffect(() => {
     if (currentContact) {
