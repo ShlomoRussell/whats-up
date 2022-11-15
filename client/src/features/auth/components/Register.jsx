@@ -1,9 +1,8 @@
 import React, { createRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { store } from "../../../app/store";
 import { useRegisterMutation } from "../redux/authApiSlice";
-import { setCredentials } from "../redux/authSlice";
 
 function Register() {
   const usernameRef = createRef();
@@ -11,13 +10,9 @@ function Register() {
   const confirmRef = createRef();
   const emailRef = createRef();
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
   const [register] = useRegisterMutation();
-
+  const { token } = store.getState().auth;
   const [registerError, setRegisterError] = useState();
-
-  const from = location.state ? location.state.from.pathname : "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,21 +22,23 @@ function Register() {
         password: passwordRef.current.value,
         confirmPassword: confirmRef.current.value,
         email: emailRef.current.value,
-      });
-      if (res.data.token) {
-        dispatch(setCredentials(res.data));
-        navigate(from, { replace: true });
+      }).unwrap();
+      if (res) {
+        navigate("/login", { replace: true });
       }
     } catch (error) {
-      if (error.originalStatus !== 500) {
+      if (error.originalStatus === 400 || error.originalStatus === 409) {
+        setRegisterError(error.data);
+      } else {
         setRegisterError(
           "Having trouble connecting to server please try again!"
         );
-      } else {
-        setRegisterError(error.data);
       }
     }
   };
+  if (token) {
+    return <Navigate to={"/"} replace={true} />;
+  }
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
       {registerError && (

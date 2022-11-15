@@ -1,14 +1,14 @@
 import React, { createRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/authApiSlice";
-import { selectCurrentToken, setCredentials } from "../redux/authSlice";
-
+import { setCredentials } from "../redux/authSlice";
+import { store } from "../../../app/store";
 function Login() {
   const usernameRef = createRef();
   const passwordRef = createRef();
-  const token = useSelector(selectCurrentToken);
+  const { token } = store.getState().auth;
 
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
@@ -24,20 +24,23 @@ function Login() {
       const res = await login({
         username: usernameRef.current.value,
         password: passwordRef.current.value,
-      });
-      if (res.data.token) {
-        dispatch(setCredentials(res.data));
+      }).unwrap();
+
+      if (res.token) {
+        dispatch(setCredentials(res));
         navigate(from, { replace: true });
       }
     } catch (error) {
-      if (!error.originalStatus) {
-        setLoginError("Having trouble connecting to server please try again!");
-      } else {
+      if (error.originalStatus === 404) {
         setLoginError(error.data);
+      } else {
+        setLoginError("Having trouble connecting to server please try again!");
       }
     }
   };
-  if (token) return navigate("/");
+  if (token) {
+    return <Navigate to={"/"} replace={true} />;
+  }
   return (
     <div className="position-absolute top-50 start-50 translate-middle">
       {loginError && <Alert variant={"warning"}>{loginError}</Alert>}
