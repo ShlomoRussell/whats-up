@@ -1,5 +1,6 @@
 import Joi from "joi";
 import express from "express";
+import ErrorModel from "../models/error.model.js";
 
 const registerSchema = Joi.object({
   email: Joi.string().email({ minDomainSegments: 2 }).required(),
@@ -15,13 +16,12 @@ const registerSchema = Joi.object({
  */
 export function validateRegister(req, res, next) {
   const { error, value } = registerSchema.validate(req.body);
-  console.log(error);
   if (error) {
     const errorMessage =
       error.message == '"confirmPassword" must be [ref:password]'
         ? "Confirm Password and password must match"
         : error.message;
-    return res.status(400).send(errorMessage);
+    return next(new ErrorModel(400, errorMessage));
   }
   next();
 }
@@ -40,7 +40,7 @@ const loginSchema = Joi.object({
 export function validateLogin(req, res, next) {
   const { error } = loginSchema.validate(req.body);
   if (error) {
-    return res.status(400).send(error.message);
+    return next(new ErrorModel(400, error.message));
   }
 
   next();

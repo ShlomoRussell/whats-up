@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 import express from "express";
+import ErrorModel from "../models/error.model.js";
+
 config();
 /**
  * @param {express.Request} req
@@ -14,6 +16,6 @@ export default function (req, res, next) {
     req.headers.id = payload.id;
     next();
   } catch (ex) {
-    return res.status(401).send();
+    return next(new ErrorModel(401));
   }
 }
