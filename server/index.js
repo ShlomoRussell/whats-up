@@ -4,9 +4,13 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import errorHandler from "./middleware/error.handler.js";
 import ErrorModel from "./models/error.model.js";
-import apiCtrl from "./controllers/api.controller.js";
-import authctrl from "./controllers/auth.controller.js";
+import userCtrl from "./controllers/user.ctrl.js";
+import authCtrl from "./controllers/auth.ctrl.js";
+import chatCtrl from "./controllers/chat.ctrl.js";
 import jwtMiddleWare from "./middleware/jwtMiddleware.js";
+import socketAuthMiddleware from "./socket/socket.authMiddleware.js";
+import socketHandlers from "./socket/socketHandlers.js";
+import path from "path";
 
 config();
 
@@ -20,40 +24,23 @@ app.use(json());
 app.use(express.static("static"));
 app.use("images", express.static("static/images"));
 
-app.use("/auth", authctrl);
+app.use("/auth", authCtrl);
 
 app.use(jwtMiddleWare);
 
-app.use("/api/users", apiCtrl);
+app.use("/api/users", userCtrl);
+app.use("/api/chat", chatCtrl);
 
-app.get("*", function (req, res) {
-  res.sendFile(require.main.path + "/static/index.html");
-});
+// app.get("*", function (req, res) {
+//   res.sendFile(path.join(process.cwd(), "/public/index.html"));
+// });
 
-app.use("*", (req, res, next) => next(new ErrorModel(404, "Route not found")));
 app.use(errorHandler);
 
 const io = new Server(server, { cors: "localhost:3000" });
 
-io.use(function (socket, next) {
-  try {
-    const token = socket.handshake.auth.token;
-    const payload = verify(token, process.env.JWT_SECRET_KEY);
-    console.log(payload);
-    next();
-  } catch (ex) {
-    next(ex);
-  }
-});
+io.use(socketAuthMiddleware);
 
-io.on("connection", (socket) => {
-  const id = socket.handshake.query.id;
-  socket.join(id);
-  socket.on("send-message", (sendToID, message) => {
-    socket.to(sendToID).volatile.emit("receive-message", { from: id, message });
-  });
-
-  console.log(`You're connect with the id:${socket.id}`);
-});
+io.on("connection", socketHandlers);
 
 server.listen(PORT, () => console.log(`server started on port: ${PORT}`));
