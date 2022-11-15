@@ -1,16 +1,28 @@
-.btn.btn-primary:hover {
+.not-active:hover {
   background-color: #f8f4f4 !important;
   color: black !important;
   border-color: rgba(0, 0, 0, 0.125) !important;
   box-shadow: none !important;
 }
-.list-group-item.active {
+
+.active {
   background-color: #ebe4e4 !important;
   color: black !important;
   border-color: rgba(0, 0, 0, 0.125) !important;
   box-shadow: none !important;
 }
-.list-group-item.active:focus:hover:active {
+
+.active:focus:hover:active {
   box-shadow: none !important;
-  background-color: #ebe4e4  !important;
+  background-color: #ebe4e4 !important;
+}
+
+.badge {
+  background-clip: "#25d366";
+}
+
+.text {
+  min-width: 0;
+  flex-shrink: 15;
+  text-align: left;
 }

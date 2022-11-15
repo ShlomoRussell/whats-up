@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Image, Offcanvas } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
 import { IoIosCamera } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
-
+import styles from "../styles/profileOffcanvas.module.css";
 function ProfileOffcanvas({
   show,
   toggleOffcanvas,
@@ -11,7 +11,22 @@ function ProfileOffcanvas({
   imgSrc,
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const hiddenFileInput = useRef(null);
+  const onProfilePicClick = (event) => {
+    hiddenFileInput.current.click();
+  };
 
+  const handleFileChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    console.log(fileUploaded);
+  };
+
+  const handlePublicNameChange = (event) => {
+    console.log(event.target.value);
+  };
+  const handleAboutChange = (event) => {
+    console.log(event.target.value);
+  };
   return (
     <Offcanvas
       className="w-25"
@@ -20,13 +35,7 @@ function ProfileOffcanvas({
       backdrop={false}
       keyboard
     >
-      <Offcanvas.Header
-        className="p-0"
-        style={{
-          backgroundColor: "#008069",
-          color: "white",
-        }}
-      >
+      <Offcanvas.Header className={`p-0 ${styles["header"]}`}>
         <Offcanvas.Title>
           <div
             className="d-flex align-items-end w-100 mb-2 lh-1"
@@ -39,26 +48,29 @@ function ProfileOffcanvas({
           </div>
         </Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body style={{ backgroundColor: "#f8f4f4" }}>
-        <div className="position-relative">
+      <Offcanvas.Body className={`p-0 ${styles["body"]}`}>
+        <div className="position-relative ">
           {isHovered && (
             <div
               onMouseLeave={() => setIsHovered(false)}
-              className="h-100 w-100 position-absolute d-flex"
-              style={{
-                cursor: "pointer",
-                color: "white",
-                backgroundColor: "rgba(0, 128, 105,.25)",
-                borderRadius: "50%",
-              }}
+              className={`h-100 w-100 position-absolute d-flex ${styles["profile-hovered"]}`}
             >
               <div
-                className="h-50 w-50 mx-auto align-self-center text-center"
-                style={{ fontSize: ".7rem" }}
+                className={`h-50 w-50 mx-auto align-self-center text-center ${styles["font-size"]}`}
               >
                 <IoIosCamera className="h-50 w-50" />
                 <br />
-                {imgSrc ? "CHANGE" : "ADD"} PROFILE PHOTO
+                <input
+                  className={styles["hidden-file"]}
+                  ref={hiddenFileInput}
+                  onChange={handleFileChange}
+                  type="file"
+                  name=""
+                  id=""
+                />
+                <span onClick={onProfilePicClick}>
+                  {imgSrc ? "CHANGE" : "ADD"} PROFILE PHOTO
+                </span>
               </div>
             </div>
           )}
@@ -75,17 +87,37 @@ function ProfileOffcanvas({
               className="mx-auto h-100 w-100"
               onMouseEnter={() => setIsHovered(true)}
             >
-              <BsPersonCircle
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  backgroundColor: "#bfc2c6",
-                  color: "white",
-                  borderRadius: "50%",
-                }}
-              />
+              <BsPersonCircle id={styles["placeholder-person"]} />
             </div>
           )}
+        </div>
+        <div className={`my-2 ${styles["bg-color"]}`}>
+          <div>
+            <label htmlFor="publicName">Your Name</label>
+          </div>
+          <input
+            className={`border-0 ${styles["input"]}`}
+            onClick={handlePublicNameChange}
+            type="text"
+            name=""
+            id="publicName"
+          />
+        </div>
+        <div>
+          This is not your username or pin. This name will be visible to your
+          What'sUp contacts.
+        </div>
+        <div className={`my-2 ${styles["bg-color"]}`}>
+          <div>
+            <label htmlFor="about">About</label>
+          </div>
+          <input
+            className={`border-0 ${styles["input"]}`}
+            onClick={handleAboutChange}
+            type="text"
+            name=""
+            id="about"
+          />
         </div>
       </Offcanvas.Body>
     </Offcanvas>

@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Stack } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { selectCurrentConversation } from "../redux/chatSlice";
-
+import styles from "../styles/chat.module.css";
 const bootstrapClassTypes = {
   sent: "bg-info bg-gradient align-self-end me-3",
   received: "bg-success bg-opacity-25 align-self-start ms-3",
-};
-const styleTypes = {
-  sent: "30px 0px 25px 15px",
-  received: "0px 25px 15px 30px ",
 };
 
 function Chat({ heightToMinus, chatHeaderHeight }) {
@@ -38,16 +34,9 @@ function Chat({ heightToMinus, chatHeaderHeight }) {
             <div
               ref={lastMessage ? lastMessageRef : null}
               key={uuidv4()}
-              className={`text-break text-wrap text-center ${
+              className={`text-break text-wrap text-center chat border ${
                 bootstrapClassTypes[c.type]
-              } border`}
-              style={{
-                width: "fit-content",
-                height: "fit-content",
-                maxWidth: "75%",
-                padding: ".7rem",
-                borderRadius: styleTypes[c.type],
-              }}
+              } ${styles[c.type]} ${styles["chat"]}`}
             >
               {c.message}
             </div>

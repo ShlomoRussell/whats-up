@@ -1,0 +1,41 @@
+.header {
+    background-color: #008069;
+    color: white;
+}
+
+.body {
+    background-color: #f8f4f4
+}
+
+.input:focus {
+    outline: none;
+    width: 100%;
+    border-bottom: solid black 3px !important;
+}
+
+.profile-hovered {
+    cursor: pointer;
+    color: white;
+    background-color: rgba(0, 128, 105, .25);
+    border-radius: 50%
+}
+
+.font-size {
+    font-size: .7rem
+}
+
+.hidden-file {
+    display: none
+}
+
+.bg-color {
+    background-color: #ffffff
+}
+
+#placeholder-person {
+    height: 100%;
+    width: 100%;
+    background-color: #bfc2c6;
+    color: white;
+    border-radius: 50%
+}

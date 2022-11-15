@@ -1,17 +1,17 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { BiSend } from "react-icons/bi";
+import styles from "../styles/sendMessageBtn.module.css";
 
 function SendMessageBtn() {
   return (
     <Button
-      style={{ backgroundColor: "#17CE3E" }}
-      className="align-self-end "
+      className={`align-self-end ${styles['send-btn']}` }
       variant="light"
       form="message"
       type="submit"
     >
-      <BiSend style={{ width: "5rem", height: "1.5rem" }} />
+      <BiSend className={styles["send-icon"]} />
     </Button>
   );
 }

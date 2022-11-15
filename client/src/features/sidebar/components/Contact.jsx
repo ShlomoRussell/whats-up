@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, Button } from "react-bootstrap";
 import ContactProfilePic from "../../chat/components/ContactProfilePic";
-import "../styles/activeContact.css";
+import styles from "../styles/contact.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentChat, setCurrentChat } from "../../chat/redux/chatSlice";
 import { selectNotificationById } from "../redux/sideBarSlice";
@@ -29,7 +29,9 @@ function Contact({ contact }) {
       <Button
         onClick={handleClick}
         className={`list-group-item py-3 lh-tight w-100 ${
-          currentContact && currentContact.id === contact.id ? "active" : ""
+          currentContact && currentContact.id === contact.id
+            ? styles["active"]
+            : styles["not-active"]
         }`}
       >
         <div className="d-flex  w-100">
@@ -38,7 +40,7 @@ function Contact({ contact }) {
             width="20%"
             contactProfilePic={contact.image}
           />
-          <div style={{ minWidth: 0, flexShrink: 15, textAlign: "left" }}>
+          <div className={styles["text"]}>
             <h6
               title={contact.username}
               className="m-1 overflow-hidden text-truncate"
@@ -57,7 +59,7 @@ function Contact({ contact }) {
               {contact.messages[contact.messages.length - 1].time}
             </small>
           </div>
-          <Badge pill style={{ backgroundClip: "#25d366" }}>
+          <Badge pill className={styles["badge"]}>
             {notification.length}
           </Badge>
         </div>

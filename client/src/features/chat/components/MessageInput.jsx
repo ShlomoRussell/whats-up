@@ -1,5 +1,4 @@
-import React, { useContext, createRef, useEffect, useState } from "react";
-import { ConversationsContext } from "../../../context/ConversationsProvider";
+import React, { createRef, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import SendMessageBtn from "./SendMessageBtn";
 import { getSocket } from "../../../socket/socket";
@@ -9,21 +8,18 @@ import {
   selectCurrentContactId,
   setCurrentConversation,
 } from "../redux/chatSlice";
+import styles from "../styles/messageInput.module.css";
 
 function MessageInput({ setMsgInptHeight }) {
-  const { currentConversation } = useContext(ConversationsContext);
   const [inputValue, setInputValue] = useState("");
   const currentContactId = useSelector(selectCurrentContactId);
   const messageRef = createRef();
   const socket = getSocket();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = messageRef.current.value;
+    const message = { message: messageRef.current.value, type: "sent" };
     if (message) {
-      setCurrentConversation([
-        ...currentConversation,
-        { message: inputValue, type: "sent" },
-      ]);
+      setCurrentConversation(message);
       socket.emit(SocketEvents.sendMesssage, currentContactId, message);
       setInputValue("");
     }
@@ -43,8 +39,7 @@ function MessageInput({ setMsgInptHeight }) {
           className="d-flex end-0 bottom-0 w-75 position-fixed"
         >
           <Form
-            style={{ backgroundColor: "#F6F6F6" }}
-            id="message"
+            id={styles["message"]}
             className="w-100"
             onSubmit={handleSubmit}
           >
