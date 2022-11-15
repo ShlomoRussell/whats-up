@@ -8,27 +8,30 @@ import { setIncomingNotifications } from "../features/sidebar/redux/sideBarSlice
 const socketApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     connectSocket: builder.query({
-      queryFn: () => ({ data }),
+      queryFn: (id) => ({ data: id }),
       async onCacheEntryAdded(
-        arg,
+        id,
         { dispatch, cacheDataLoaded, cacheEntryRemoved }
       ) {
         try {
           await cacheDataLoaded;
-          const socket = getSocket();
-          socket.on(SocketEvents.receiveMessage, (incoming) => {
-            const { id } = store.getState().chat;
-            if (incoming.from === id) {
-              dispatch(
-                setCurrentConversation({
-                  message: incoming.message,
-                  type: "received",
-                })
-              );
-            } else {
-              dispatch(setIncomingNotifications(incoming.from));
-            }
-          });
+          if (id) {
+            console.log(id);
+            const socket = getSocket(id);
+            socket.on(SocketEvents.receiveMessage, (incoming) => {
+              const { id } = store.getState().chat;
+              if (incoming.from === id) {
+                dispatch(
+                  setCurrentConversation({
+                    message: incoming.message,
+                    type: "received",
+                  })
+                );
+              } else {
+                dispatch(setIncomingNotifications(incoming.from));
+              }
+            });
+          }
         } catch (error) {
           console.log(error);
         }
