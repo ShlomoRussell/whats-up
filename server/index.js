@@ -22,7 +22,7 @@ app.use(urlencoded({ extended: true }));
 app.use(json());
 
 app.use(express.static("static"));
-app.use("images", express.static("static/images"));
+app.use("/images", express.static("uploads"));
 
 app.use("/auth", authCtrl);
 

@@ -44,3 +44,44 @@ export async function getUserByUsername(username) {
     throw new Error(error.message);
   }
 }
+
+/**
+ *
+ * @param {string} imgPath
+ * @param {string} userId
+ */
+export async function updateProfilePic(userId, imgPath) {
+  const query = "UPDATE `users` SET`img` = ? WHERE `user_id` = ?;";
+  try {
+    const updated = await runQuery(query, [imgPath, userId]);
+    if (updated) {
+      return true;
+    } else return false;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function updateUsername(userId, username) {
+  const query = "UPDATE `users` SET `username` = ? WHERE `user_id` = ?;";
+  try {
+    const updated = await runQuery(query, [username, userId]);
+    if (updated) {
+      return true;
+    } else return false;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function updateAbout(userId, about) {
+  const query = "UPDATE `users` SET `about` = ? WHERE `user_id` = ?;";
+  try {
+    const updated = await runQuery(query, [about, userId]);
+    if (updated) {
+      return true;
+    } else return false;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
