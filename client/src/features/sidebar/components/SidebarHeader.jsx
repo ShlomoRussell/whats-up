@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import UserProfilePic from "./UserProfilePic";
 import UserMenuDropdown from "./UserMenuDropdown";
-import UnreadStatusIcon from "./UnreadStatusIcon";
-import ReadStatusIcon from "./ReadStatusIcon";
-import NewChatIcon from "./NewChatIcon";
+import UnreadStatusIcon from "../icons/UnreadStatusIcon";
+import ReadStatusIcon from "../icons/ReadStatusIcon";
+import NewChatIcon from "../icons/NewChatIcon";
 
 function SidebarHeader({ searchHeight, setSearchIsFocused }) {
   const sidebarHeaderHeightRef = useRef();

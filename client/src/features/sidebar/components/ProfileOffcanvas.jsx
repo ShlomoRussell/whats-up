@@ -1,44 +1,56 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../auth/redux/authSlice";
 import { Image, Offcanvas } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
-import { IoIosCamera } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
+import UserProfilePicDropdown from "./UserProfilePicDropdown";
 import styles from "../styles/profileOffcanvas.module.css";
-function ProfileOffcanvas({
-  show,
-  toggleOffcanvas,
-  offcanvasHeaderHeight,
-  imgSrc,
-}) {
+import EmojiInput from "./EmojiInput";
+import {
+  useChangeAboutMutation,
+  useChangePublicNameMutation,
+} from "../redux/sideBarApiSlice";
+
+function ProfileOffcanvas({ show, toggleOffcanvas, offcanvasHeaderHeight }) {
+  const { username, about, image } = useSelector(selectCurrentUser);
+  const [changePublicName] = useChangePublicNameMutation();
+  const [changeAbout] = useChangeAboutMutation();
   const [isHovered, setIsHovered] = useState(false);
-  const hiddenFileInput = useRef(null);
-  const onProfilePicClick = (event) => {
-    hiddenFileInput.current.click();
+  const [publicName, setPublicName] = useState("");
+  const [aboutValue, setAboutValue] = useState("");
+
+  useEffect(() => {
+    setPublicName(username);
+    setAboutValue(about);
+  }, [username, about]);
+  
+  const serverError = () => alert("There was an error. Please try again");
+
+  const handlePublicNameChange = async (event) => {
+    try {
+      await changePublicName(publicName).unwrap();
+    } catch (error) {
+      serverError();
+      console.log(error);
+    }
   };
 
-  const handleFileChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
+  const handleAboutChange = async (event) => {
+    try {
+      await changeAbout(aboutValue).unwrap();
+    } catch (error) {
+      serverError();
+      console.log(error);
+    }
   };
 
-  const handlePublicNameChange = (event) => {
-    console.log(event.target.value);
-  };
-  const handleAboutChange = (event) => {
-    console.log(event.target.value);
-  };
   return (
-    <Offcanvas
-      className="w-25"
-      show={show}
-      scroll={true}
-      backdrop={false}
-      keyboard
-    >
+    <Offcanvas className="w-25" show={show} backdrop={false} keyboard scroll>
       <Offcanvas.Header className={`p-0 ${styles["header"]}`}>
         <Offcanvas.Title>
           <div
-            className="d-flex align-items-end w-100 mb-2 lh-1"
+            className="d-flex align-items-end w-100 mb-2 lh-1 ps-3"
             style={{ height: offcanvasHeaderHeight + "px" }}
           >
             <div className="p-2" onClick={toggleOffcanvas}>
@@ -49,74 +61,64 @@ function ProfileOffcanvas({
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className={`p-0 ${styles["body"]}`}>
-        <div className="position-relative ">
-          {isHovered && (
-            <div
-              onMouseLeave={() => setIsHovered(false)}
-              className={`h-100 w-100 position-absolute d-flex ${styles["profile-hovered"]}`}
-            >
-              <div
-                className={`h-50 w-50 mx-auto align-self-center text-center ${styles["font-size"]}`}
-              >
-                <IoIosCamera className="h-50 w-50" />
-                <br />
-                <input
-                  className={styles["hidden-file"]}
-                  ref={hiddenFileInput}
-                  onChange={handleFileChange}
-                  type="file"
-                  name=""
-                  id=""
-                />
-                <span onClick={onProfilePicClick}>
-                  {imgSrc ? "CHANGE" : "ADD"} PROFILE PHOTO
-                </span>
+        <div className="h-100 w-100">
+          <div className="position-relative h-50 w-100 ">
+            {isHovered ? (
+              <UserProfilePicDropdown
+                setIsHovered={setIsHovered}
+                isImg={image}
+              />
+            ) : null}
+            {image ? (
+              <div>
+                <div
+                  className="position-absolute top-50 start-50 translate-middle "
+                  style={{ width: "200px", height: "200px" }}
+                  onMouseEnter={() => setIsHovered(true)}
+                >
+                  <Image
+                    roundedCircle
+                    fluid
+                    src={"/images/" + image}
+                    className="h-100 w-100"
+                  />
+                </div>
               </div>
-            </div>
-          )}
-          {imgSrc ? (
-            <Image
-              roundedCircle
-              fluid
-              onError={() => (imgSrc = false)}
-              src={imgSrc}
-              onMouseEnter={() => setIsHovered(true)}
-            />
-          ) : (
-            <div
-              className="mx-auto h-100 w-100"
-              onMouseEnter={() => setIsHovered(true)}
-            >
-              <BsPersonCircle id={styles["placeholder-person"]} />
-            </div>
-          )}
-        </div>
-        <div className={`my-2 ${styles["bg-color"]}`}>
-          <div>
-            <label htmlFor="publicName">Your Name</label>
+            ) : (
+              <div
+                className="position-absolute top-50 start-50 translate-middle"
+                style={{ width: "200px", height: "200px" }}
+                onMouseEnter={() => setIsHovered(true)}
+              >
+                <BsPersonCircle id={styles["placeholder-person"]} />
+              </div>
+            )}
           </div>
-          <input
-            className={`border-0 ${styles["input"]}`}
-            onClick={handlePublicNameChange}
-            type="text"
-            name=""
+          <EmojiInput
             id="publicName"
+            onCheckClick={handlePublicNameChange}
+            label="Your Name"
+            value={publicName}
+            onEmojiSelect={(emoji) =>
+              setPublicName(
+                publicName.length < 25 ? publicName + emoji : publicName
+              )
+            }
+            onChange={(value) =>
+              setPublicName(publicName.length < 25 ? value : publicName)
+            }
           />
-        </div>
-        <div>
-          This is not your username or pin. This name will be visible to your
-          What'sUp contacts.
-        </div>
-        <div className={`my-2 ${styles["bg-color"]}`}>
-          <div>
-            <label htmlFor="about">About</label>
+          <div className="text-muted m-2" style={{ fontSize: "14px" }}>
+            This is not your username or pin. This name will be visible to your
+            What's Up contacts.
           </div>
-          <input
-            className={`border-0 ${styles["input"]}`}
-            onClick={handleAboutChange}
-            type="text"
-            name=""
+          <EmojiInput
             id="about"
+            label="About"
+            onCheckClick={handleAboutChange}
+            value={aboutValue}
+            onEmojiSelect={(emoji) => setAboutValue(aboutValue + emoji)}
+            onChange={(value) => setAboutValue(value)}
           />
         </div>
       </Offcanvas.Body>

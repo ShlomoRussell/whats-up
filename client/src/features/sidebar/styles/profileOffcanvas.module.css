@@ -1,35 +1,44 @@
 .header {
-    background-color: #008069;
-    color: white;
+    background-color: #008069 !important;
+    color: white !important;
 }
 
 .body {
-    background-color: #f8f4f4
+    background-color: #f8f4f4 !important;
+    width: 100% !important;
+}
+
+
+
+.underlined {
+    border-bottom: solid #667781 2px !important;
+}
+
+.input {
+    width: 100%
 }
 
 .input:focus {
-    outline: none;
-    width: 100%;
-    border-bottom: solid black 3px !important;
+    outline: none !important;
 }
 
 .profile-hovered {
-    cursor: pointer;
-    color: white;
-    background-color: rgba(0, 128, 105, .25);
-    border-radius: 50%
+    color: white !important;
+    background-color: rgba(0, 128, 105, .25) !important;
+    border-radius: 50% !important
 }
 
 .font-size {
-    font-size: .7rem
+    cursor: pointer !important;
+    font-size: .7rem !important
 }
 
 .hidden-file {
-    display: none
+    display: none !important
 }
 
 .bg-color {
-    background-color: #ffffff
+    background-color: #ffffff !important
 }
 
 #placeholder-person {

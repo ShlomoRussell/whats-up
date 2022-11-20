@@ -6,7 +6,7 @@ import ProfileOffcanvas from "./ProfileOffcanvas";
 import { selectCurrentUser } from "../../auth/redux/authSlice";
 
 function UserProfilePic({ offcanvasHeaderHeight }) {
-  const user = useSelector(selectCurrentUser);
+  const { image } = useSelector(selectCurrentUser);
   const [isImg, setIsImg] = useState(true);
   const [show, setShow] = useState(false);
   const toggleOffcanvas = (e) => {
@@ -14,14 +14,18 @@ function UserProfilePic({ offcanvasHeaderHeight }) {
   };
 
   return (
-    <div style={{ height: "2.75rem", width: "2.75rem" }}>
-      {user && isImg ? (
+    <div
+      className="posiiton-relative"
+      style={{ height: "2.75rem", width: "2.75rem", borderRadius: "50%" }}
+    >
+      {isImg && image ? (
         <Image
           onClick={toggleOffcanvas}
-          src={"/images/" + user["image"]}
+          src={"/images/" + image}
           onError={() => setIsImg(false)}
           roundedCircle={true}
-          className="mh-100 mw-100"
+          fluid
+          className="h-100 w-100 position-relative d-block"
         />
       ) : (
         <OverlayTrigger
@@ -45,7 +49,7 @@ function UserProfilePic({ offcanvasHeaderHeight }) {
         show={show}
         toggleOffcanvas={toggleOffcanvas}
         offcanvasHeaderHeight={offcanvasHeaderHeight}
-        imgSrc={user && isImg ? "/images/" + user["image"] : isImg}
+        imgSrc={isImg && image && "/images/" + image }
       />
     </div>
   );

@@ -1,9 +1,9 @@
 import React from "react";
 import Contact from "./Contact";
 import { v4 as uuidv4 } from "uuid";
-import "../../../styles/scrollbar.css";
 import { useSelector } from "react-redux";
 import { selectContacts } from "../../auth/redux/authSlice";
+import "../../../styles/scrollbar.css";
 
 export default function SidebarBody() {
   const contacts = useSelector(selectContacts);
