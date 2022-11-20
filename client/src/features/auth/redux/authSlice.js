@@ -4,6 +4,7 @@ const authInitialState = () => ({
   id: null,
   email: null,
   username: null,
+  about: null,
   image: null,
   isAdmin: false,
   contacts: [],
@@ -15,6 +16,9 @@ const authSlice = createSlice({
   initialState: authInitialState(),
   reducers: {
     setCredentials: (state, action) => {
+      return { ...state, ...action.payload };
+    },
+    updateAuthKey: (state, action) => {
       return { ...state, ...action.payload };
     },
     logOut: (_state, _action) => {
@@ -32,7 +36,7 @@ export const authMiddleware = (_store) => (next) => (action) => {
   return next(action);
 };
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, updateAuthKey } = authSlice.actions;
 export default authSlice.reducer;
 export const selectCurrentUser = (state) => state.auth;
 export const selectCurrentToken = (state) => state.auth.token;

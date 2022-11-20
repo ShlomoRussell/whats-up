@@ -1,10 +1,10 @@
 import React from "react";
 import { Badge, Button } from "react-bootstrap";
-import ContactProfilePic from "../../chat/components/ContactProfilePic";
-import styles from "../styles/contact.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentChat, setCurrentChat } from "../../chat/redux/chatSlice";
-import { selectNotificationById } from "../redux/sideBarSlice";
+import { selectNotificationById } from "../redux/notificationSlice";
+import ContactProfilePic from "../../chat/components/ContactProfilePic";
+import styles from "../styles/contact.module.css";
 
 function Contact({ contact }) {
   const dispatch = useDispatch();

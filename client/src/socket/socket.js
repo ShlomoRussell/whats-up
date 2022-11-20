@@ -6,7 +6,6 @@ import { io, Socket } from "socket.io-client";
 let socket;
 export function getSocket(id) {
   if (!socket && id) {
-    console.log(id)
     socket = io("http://localhost:4567", {
       path: "/socket.io",
       transports: ["websocket"],

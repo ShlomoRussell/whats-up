@@ -1,0 +1,16 @@
+.search-btn {
+    pointer-events: none !important;
+    background-color: #f4f4f4 !important
+}
+
+.icon {
+    margin-top: -0.25rem !important
+}
+
+.input {
+    background-color: #f4f4f4 !important
+}
+
+.input:focus{
+    box-shadow: none !important;
+}

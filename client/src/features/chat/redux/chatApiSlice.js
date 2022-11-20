@@ -4,7 +4,7 @@ import { setCurrentChat } from "./chatSlice";
 export const chatApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getContact: builder.query({
-      query: (contactId) => `users/contacts/${contactId}`,
+      query: (contactId) => `/api/users/contacts/${contactId}`,
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;

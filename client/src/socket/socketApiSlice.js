@@ -3,7 +3,7 @@ import { getSocket } from "./socket";
 import { SocketEvents } from "./socketEvent";
 import { store } from "../app/store";
 import { setCurrentConversation } from "../features/chat/redux/chatSlice";
-import { setIncomingNotifications } from "../features/sidebar/redux/sideBarSlice";
+import { setIncomingNotifications } from "../features/sidebar/redux/notificationSlice";
 
 const socketApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,7 +16,6 @@ const socketApiSlice = apiSlice.injectEndpoints({
         try {
           await cacheDataLoaded;
           if (id) {
-            console.log(id);
             const socket = getSocket(id);
             socket.on(SocketEvents.receiveMessage, (incoming) => {
               const { id } = store.getState().chat;

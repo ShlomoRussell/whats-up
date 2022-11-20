@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import Chat from "./Chat";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
+import Home from "../../../components/Home";
 import "../../../styles/scrollbar.css";
+import { useSelector } from "react-redux";
+import { selectCurrentConversation } from "../redux/chatSlice";
 
 function ChatContainer() {
   const [msgInptHeight, setMsgInptHeight] = useState(0);
   const [chatHeaderHeight, setChatHeaderHeight] = useState(0);
+  const currentConversation = useSelector(selectCurrentConversation);
+
   return (
     <div
       className="d-flex flex-column flex-grow-1 overflow-auto"
@@ -17,8 +22,17 @@ function ChatContainer() {
         boxSizing: "border-box",
       }}
     >
-      <ChatHeader setChatHeaderHeight={setChatHeaderHeight} />
-      <Chat heightToMinus={msgInptHeight} chatHeaderHeight={chatHeaderHeight} />
+      {currentConversation.id ? (
+        <>
+          <ChatHeader setChatHeaderHeight={setChatHeaderHeight} />
+          <Chat
+            heightToMinus={msgInptHeight}
+            chatHeaderHeight={chatHeaderHeight}
+          />
+        </>
+      ) : (
+        <Home />
+      )}
       <MessageInput setMsgInptHeight={setMsgInptHeight} />
     </div>
   );
