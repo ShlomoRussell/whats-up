@@ -1,7 +1,8 @@
 import React, { forwardRef, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { IoIosCamera } from "react-icons/io";
-import { useUpdateProfilePicMutation } from "../redux/sideBarApiSlice";
+import { selectCurrentUser } from "../../auth/redux/authSlice";
+import { useUploadProfilePicMutation } from "../redux/sideBarApiSlice";
 import styles from "../styles/profileOffcanvas.module.css";
 
 const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
@@ -18,8 +19,9 @@ const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
   </div>
 ));
 
-function UserProfilePicDropdown({ isImg, setIsHovered }) {
-  const [updateProfilePic] = useUpdateProfilePicMutation();
+function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
+  const [uploadProfilePic] = useUploadProfilePicMutation();
+  const { image } = useSelector(selectCurrentUser);
   const hiddenFileInput = useRef(null);
   const handleFileChange = async (event) => {
     const formData = new FormData();
@@ -31,8 +33,10 @@ function UserProfilePicDropdown({ isImg, setIsHovered }) {
     );
 
     try {
-      await updateProfilePic(formData);
-    } catch (error) {}
+      await uploadProfilePic(formData, image);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onUploadPhotoClick = (event) => {
@@ -41,8 +45,9 @@ function UserProfilePicDropdown({ isImg, setIsHovered }) {
   return (
     <div
       onMouseLeave={() => setIsHovered(false)}
-      className={`position-absolute top-50 start-50 translate-middle d-flex  ${styles["profile-hovered"]}`}
-      style={{ width: "200px", height: "200px", zIndex: "1" }}
+      className={`position-absolute top-50 start-50 translate-middle d-flex ${
+        styles["profile"]
+      } ${isHovered ? styles["hovered"] : ""}`}
     >
       <Dropdown
         className={`h-50 w-50 mx-auto align-self-center text-center ${styles["font-size"]}`}

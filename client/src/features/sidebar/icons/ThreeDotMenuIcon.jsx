@@ -3,6 +3,7 @@ import React from "react";
 function ThreeDotMenuIcon() {
   return (
     <svg
+      cursor="pointer"
       style={{ color: "#54656f" }}
       className="mt-2"
       viewBox="0 0 24 24"

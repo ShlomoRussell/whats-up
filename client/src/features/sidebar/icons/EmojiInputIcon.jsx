@@ -17,6 +17,7 @@ function EmojiInputIcon({ onEmojiClick }) {
         target={target}
       />
       <svg
+        cursor="pointer"
         onClick={handleClick}
         color="#8696a0"
         viewBox="0 0 20 20"

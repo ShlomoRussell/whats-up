@@ -1,7 +1,10 @@
-import ErrorModel from "../models/error.model.js";
+import { Router } from "express";
 import fileUpload from "express-fileupload";
 import { v4 as uuidv4 } from "uuid";
 import { join } from "path";
+import { cwd } from "process";
+import { unlinkSync } from "fs";
+import ErrorModel from "../models/error.model.js";
 import {
   getUserById,
   getUserByUsername,
@@ -9,7 +12,6 @@ import {
   updateProfilePic,
   updateUsername,
 } from "../bls/users.bl.js";
-import { Router } from "express";
 
 const userCtrl = Router();
 userCtrl.use(
@@ -64,13 +66,16 @@ userCtrl.put("/about", async (req, res, next) => {
     const user = await updateAbout(id, req.body.about);
     res.json(user);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return next(new ErrorModel(500));
   }
 });
 
 userCtrl.put("/img", async (req, res, next) => {
   const id = req.headers.id;
+  if (req.body.oldImgPath) {
+    unlinkSync(join(cwd(), "uploads", req.body.oldImgPath));
+  }
   let newFileName;
   if (req.files) {
     const uploadedfile = req.files.profilePic;

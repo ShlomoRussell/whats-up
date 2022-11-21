@@ -3,6 +3,7 @@ import React from "react";
 function CheckIcon({ onClick }) {
   return (
     <svg
+      cursor='pointer'
       onClick={onClick}
       className="mb-1"
       color="#8696a0"

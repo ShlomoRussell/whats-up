@@ -24,7 +24,7 @@ function ProfileOffcanvas({ show, toggleOffcanvas, offcanvasHeaderHeight }) {
     setPublicName(username);
     setAboutValue(about);
   }, [username, about]);
-  
+
   const serverError = () => alert("There was an error. Please try again");
 
   const handlePublicNameChange = async (event) => {
@@ -63,12 +63,11 @@ function ProfileOffcanvas({ show, toggleOffcanvas, offcanvasHeaderHeight }) {
       <Offcanvas.Body className={`p-0 ${styles["body"]}`}>
         <div className="h-100 w-100">
           <div className="position-relative h-50 w-100 ">
-            {isHovered ? (
-              <UserProfilePicDropdown
-                setIsHovered={setIsHovered}
-                isImg={image}
-              />
-            ) : null}
+            <UserProfilePicDropdown
+              isHovered={isHovered}
+              setIsHovered={setIsHovered}
+              isImg={image}
+            />
             {image ? (
               <div>
                 <div

@@ -22,10 +22,19 @@
     outline: none !important;
 }
 
-.profile-hovered {
+
+.profile {
+    visibility: hidden;
     color: white !important;
+    width: 200px !important;
+    height: 200px !important;
+    z-index: 1 !important;
     background-color: rgba(0, 128, 105, .25) !important;
     border-radius: 50% !important
+}
+
+.hovered{
+    visibility: visible;
 }
 
 .font-size {
@@ -46,5 +55,6 @@
     width: 100%;
     background-color: #bfc2c6;
     color: white;
+    z-index: 0;
     border-radius: 50%
 }

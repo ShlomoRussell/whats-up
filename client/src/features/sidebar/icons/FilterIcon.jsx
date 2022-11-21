@@ -3,6 +3,7 @@ import React from "react";
 function FilterIcon({ onClick }) {
   return (
     <svg
+      cursor="pointer"
       onClick={onClick}
       viewBox="0 0 24 24"
       height="20"

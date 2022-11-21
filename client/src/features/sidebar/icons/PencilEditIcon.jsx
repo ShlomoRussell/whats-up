@@ -3,6 +3,7 @@ import React from "react";
 function PencilEditIcon({ onClick }) {
   return (
     <svg
+      cursor="pointer"
       color="#8696a0"
       onClick={onClick}
       className="ms-4"

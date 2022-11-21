@@ -49,7 +49,6 @@ function UserProfilePic({ offcanvasHeaderHeight }) {
         show={show}
         toggleOffcanvas={toggleOffcanvas}
         offcanvasHeaderHeight={offcanvasHeaderHeight}
-        imgSrc={isImg && image && "/images/" + image }
       />
     </div>
   );

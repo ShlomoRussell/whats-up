@@ -3,6 +3,7 @@ import React from "react";
 function NewChatIcon() {
   return (
     <svg
+      cursor="pointer"
       className="mt-2"
       style={{ color: "#54656f" }}
       viewBox="0 0 24 24"

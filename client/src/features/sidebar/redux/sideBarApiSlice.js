@@ -6,11 +6,11 @@ export const sideBarApislice = apiSlice.injectEndpoints({
     newChat: builder.query({
       query: (newChatUsername) => `/api/users/newChat/${newChatUsername}`,
     }),
-    updateProfilePic: builder.mutation({
-      query: (img) => ({
+    uploadProfilePic: builder.mutation({
+      query: (img, oldImgPath) => ({
         url: "/api/users/img",
         method: "PUT",
-        body: img,
+        body: { oldImgPath, img },
       }),
     }),
     changePublicName: builder.mutation({
@@ -48,7 +48,7 @@ export const sideBarApislice = apiSlice.injectEndpoints({
 
 export const {
   useNewChatQuery,
-  useUpdateProfilePicMutation,
+  useUploadProfilePicMutation,
   useChangeAboutMutation,
   useChangePublicNameMutation,
 } = sideBarApislice;
