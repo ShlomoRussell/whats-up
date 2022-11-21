@@ -1,9 +1,11 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { IoIosCamera } from "react-icons/io";
+import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../auth/redux/authSlice";
 import { useUploadProfilePicMutation } from "../redux/sideBarApiSlice";
 import styles from "../styles/profileOffcanvas.module.css";
+import TakePictureModal from "./TakePictureModal";
 
 const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
   <div
@@ -20,6 +22,7 @@ const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
 ));
 
 function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
+  const [showTakePictureModal, setShowTakePictureModal] = useState(false);
   const [uploadProfilePic] = useUploadProfilePicMutation();
   const { image } = useSelector(selectCurrentUser);
   const hiddenFileInput = useRef(null);
@@ -69,7 +72,16 @@ function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
         />
         <Dropdown.Menu>
           <Dropdown.Item eventKey="1">View Photo</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Take Photo</Dropdown.Item>
+          <Dropdown.Item
+            eventKey="2"
+            onClick={() => setShowTakePictureModal(true)}
+          >
+            Take Photo{" "}
+            <TakePictureModal
+              show={showTakePictureModal}
+              setShow={setShowTakePictureModal}
+            />
+          </Dropdown.Item>
           <Dropdown.Item eventKey="3" onClick={onUploadPhotoClick}>
             Upload Photo
           </Dropdown.Item>

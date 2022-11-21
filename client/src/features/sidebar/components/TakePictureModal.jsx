@@ -1,40 +1,50 @@
-import React from 'react'
-import { Button, Modal } from 'react-bootstrap';
-import Webcam from 'react-webcam';
+import React, { useRef, useCallback, useState } from "react";
+import { Button, Image, Modal } from "react-bootstrap";
+import Webcam from "react-webcam";
 
-function TakePictureModal() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+function TakePictureModal({ show, setShow }) {
+  const [picture, setPicture] = useState("");
+  const webcamRef = useRef();
+  const capture = useCallback(() => {
+    const pictureSrc = webcamRef.current.getScreenshot();
+    console.log(pictureSrc);
+    setPicture(pictureSrc);
+  }, [webcamRef]);
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Webcam/>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Understood</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Modal show={show} backdrop="static" keyboard={false}>
+      <Modal.Header onHide={() => setShow(false)} closeButton>
+        <Modal.Title>Take Photo</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {picture === "" ? (
+          <Webcam
+            audio={false}
+            height={"375px"}
+            width={"500px"}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              width: 500,
+              height: 375,
+              facingMode: "user",
+            }}
+            ref={webcamRef}
+          />
+        ) : (
+          <Image src={picture} />
+        )}
+        {picture !== "" ? (
+          <button onClick={(e) => setPicture("")} className="btn btn-primary">
+            Retake
+          </button>
+        ) : (
+          <button onClick={capture} className="btn btn-danger">
+            Capture
+          </button>
+        )}
+      </Modal.Body>
+    </Modal>
   );
 }
 
-export default TakePictureModal
+export default TakePictureModal;
