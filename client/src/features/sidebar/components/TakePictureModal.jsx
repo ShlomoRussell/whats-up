@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useState } from "react";
-import { Button, Image, Modal } from "react-bootstrap";
+import { Image, Modal } from "react-bootstrap";
 import Webcam from "react-webcam";
 
-function TakePictureModal({ show, setShow }) {
+function TakePictureModal({ show, toggleShow, onUserMediaError }) {
   const [picture, setPicture] = useState("");
   const webcamRef = useRef();
   const capture = useCallback(() => {
@@ -10,10 +10,13 @@ function TakePictureModal({ show, setShow }) {
     console.log(pictureSrc);
     setPicture(pictureSrc);
   }, [webcamRef]);
-
+  const handleUserMediaError = (err) => {
+    console.log(err);
+    onUserMediaError();
+  };
   return (
-    <Modal show={show} backdrop="static" keyboard={false}>
-      <Modal.Header onHide={() => setShow(false)} closeButton>
+    <Modal show={show} backdrop="static" onHide={toggleShow} keyboard={false}>
+      <Modal.Header closeButton>
         <Modal.Title>Take Photo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -23,6 +26,7 @@ function TakePictureModal({ show, setShow }) {
             height={"375px"}
             width={"500px"}
             screenshotFormat="image/jpeg"
+            onUserMediaError={handleUserMediaError}
             videoConstraints={{
               width: 500,
               height: 375,
