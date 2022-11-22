@@ -2,8 +2,9 @@ import React, { useRef, useCallback, useState } from "react";
 import { Image, Modal } from "react-bootstrap";
 import Webcam from "react-webcam";
 
-function TakePictureModal({ show, toggleShow, onUserMediaError }) {
+function TakePictureModal({ _show, toggleShow, onUserMediaError }) {
   const [picture, setPicture] = useState("");
+  const [show, setShow] = useState(false);
   const webcamRef = useRef();
   const capture = useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
@@ -15,8 +16,20 @@ function TakePictureModal({ show, toggleShow, onUserMediaError }) {
     onUserMediaError();
   };
   return (
-    <Modal show={show} backdrop="static" onHide={toggleShow} keyboard={false}>
-      <Modal.Header closeButton>
+    <Modal
+      onEnter={() => setShow(true)}
+      show={_show || show}
+      backdrop="static"
+      onHide={toggleShow}
+      keyboard={false}
+    >
+      <Modal.Header
+        style={{
+          backgroundColor: "#008069",
+          color: "white",
+        }}
+        closeButton
+      >
         <Modal.Title>Take Photo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
