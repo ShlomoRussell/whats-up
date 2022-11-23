@@ -11,16 +11,14 @@ function TakePictureModal({ _show, toggleShow, onUserMediaError }) {
     console.log(pictureSrc);
     setPicture(pictureSrc);
   }, [webcamRef]);
-  const handleUserMediaError = (err) => {
-    console.log(err);
-    onUserMediaError();
-  };
+
   return (
     <Modal
       onEnter={() => setShow(true)}
+      centered
       show={_show || show}
       backdrop="static"
-      onHide={toggleShow}
+      onHide={() => setShow(false)}
       keyboard={false}
     >
       <Modal.Header
@@ -32,14 +30,17 @@ function TakePictureModal({ _show, toggleShow, onUserMediaError }) {
       >
         <Modal.Title>Take Photo</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="m-0">
         {picture === "" ? (
           <Webcam
             audio={false}
             height={"375px"}
             width={"500px"}
             screenshotFormat="image/jpeg"
-            onUserMediaError={handleUserMediaError}
+            onUserMediaError={() => {
+              setShow(false);
+              onUserMediaError();
+            }}
             videoConstraints={{
               width: 500,
               height: 375,

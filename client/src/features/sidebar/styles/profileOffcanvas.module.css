@@ -8,7 +8,9 @@
     width: 100% !important;
 }
 
-
+.modal-backdrop{
+    background-color:hsla(0,0%,100%,0.85) !important;
+}
 
 .underlined {
     border-bottom: solid #667781 2px !important;

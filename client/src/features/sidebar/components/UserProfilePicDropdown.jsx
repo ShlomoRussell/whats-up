@@ -7,6 +7,8 @@ import { useUploadProfilePicMutation } from "../redux/sideBarApiSlice";
 import TakePictureModal from "./TakePictureModal";
 import CameraNotFoundModal from "./CameraNotFoundModal";
 import styles from "../styles/profileOffcanvas.module.css";
+import ViewPhoto from "./ViewPhoto";
+import RemoveProfilePicModal from "./RemoveProfilePicModal";
 
 const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
   <div
@@ -24,10 +26,15 @@ const CustomToggle = forwardRef(({ onClick, isImg }, ref) => (
 
 function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
   const [showTakePictureModal, setShowTakePictureModal] = useState(false);
-  const [userMediaError, setUserMediaError] = useState(false);
   const toggleTakePictureModal = () =>
     setShowTakePictureModal(!showTakePictureModal);
+  const [viewPhoto, setViewPhoto] = useState(false);
+  const toggleViewPhoto = () => setViewPhoto(!viewPhoto);
+  const [userMediaError, setUserMediaError] = useState(false);
   const toggleUserMediaError = () => setUserMediaError(!userMediaError);
+  const [showRemovePhotoModal, setShowRemovePhotoModal] = useState(false);
+  const toggleShowRemovePhotoModal = () =>
+    setShowRemovePhotoModal(!showRemovePhotoModal);
   const [uploadProfilePic] = useUploadProfilePicMutation();
   const { image } = useSelector(selectCurrentUser);
   const hiddenFileInput = useRef(null);
@@ -41,7 +48,7 @@ function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
     );
 
     try {
-      await uploadProfilePic(formData, image);
+      await uploadProfilePic({img:formData,oldImgPath: image});
     } catch (error) {
       console.log(error);
     }
@@ -76,17 +83,30 @@ function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
           id=""
         />
         <Dropdown.Menu>
-          <Dropdown.Item eventKey="1">View Photo</Dropdown.Item>
-          <Dropdown.Item eventKey="2" onClick={toggleTakePictureModal}>
+          <Dropdown.Item eventKey="1" onClick={toggleViewPhoto}>
+            View Photo
+            <ViewPhoto
+              src={`images/${image}`}
+              _show={viewPhoto}
+              toggleShow={toggleViewPhoto}
+            />
+          </Dropdown.Item>
+          <Dropdown.Item
+            eventKey="2"
+            onClick={() => {
+              toggleTakePictureModal();
+              setIsHovered(false);
+            }}
+          >
             Take Photo
             {userMediaError ? (
               <CameraNotFoundModal
-                show={userMediaError}
+                _show={userMediaError}
                 toggleShow={toggleUserMediaError}
               />
             ) : (
               <TakePictureModal
-                show={showTakePictureModal}
+                _show={showTakePictureModal}
                 toggleShow={toggleTakePictureModal}
                 onUserMediaError={toggleUserMediaError}
               />
@@ -95,7 +115,19 @@ function UserProfilePicDropdown({ isImg, isHovered, setIsHovered }) {
           <Dropdown.Item eventKey="3" onClick={onUploadPhotoClick}>
             Upload Photo
           </Dropdown.Item>
-          <Dropdown.Item eventKey="4">Remove Photo</Dropdown.Item>
+          <Dropdown.Item
+            eventKey="4"
+            onClick={() => {
+              toggleShowRemovePhotoModal();
+              setIsHovered(false);
+            }}
+          >
+            Remove Photo
+            <RemoveProfilePicModal
+              _show={showRemovePhotoModal}
+              toggleShow={toggleShowRemovePhotoModal}
+            />
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </div>

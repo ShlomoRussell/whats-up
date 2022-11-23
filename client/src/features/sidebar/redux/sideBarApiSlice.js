@@ -7,11 +7,36 @@ export const sideBarApislice = apiSlice.injectEndpoints({
       query: (newChatUsername) => `/api/users/newChat/${newChatUsername}`,
     }),
     uploadProfilePic: builder.mutation({
-      query: (img, oldImgPath) => ({
-        url: "/api/users/img",
+      query: ({ img, oldImgPath }) => ({
+        url: `/api/users/img/${oldImgPath}`,
         method: "PUT",
-        body: { oldImgPath, img },
+        body: img,
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const {
+            data: { image },
+          } = await queryFulfilled;
+          dispatch(updateAuthKey({ image }));
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
+    deleteProfilePic: builder.mutation({
+      query: (oldImgPath) => ({
+        url: "/api/users/img",
+        method: "DELETE",
+        body: { oldImgPath },
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(updateAuthKey({ image: null }));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
     changePublicName: builder.mutation({
       query: (name) => ({
@@ -51,4 +76,5 @@ export const {
   useUploadProfilePicMutation,
   useChangeAboutMutation,
   useChangePublicNameMutation,
+  useDeleteProfilePicMutation,
 } = sideBarApislice;

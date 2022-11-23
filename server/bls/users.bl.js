@@ -61,6 +61,17 @@ export async function updateProfilePic(userId, imgPath) {
     throw new Error(error.message);
   }
 }
+export async function deleteProfilePic(userId) {
+  const query = "UPDATE `users` SET`img` = null WHERE `user_id` = ?;";
+  try {
+    const updated = await runQuery(query, [userId]);
+    if (updated) {
+      return true;
+    } else return false;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
 export async function updateUsername(userId, username) {
   const query = "UPDATE `users` SET `username` = ? WHERE `user_id` = ?;";

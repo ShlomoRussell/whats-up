@@ -6,6 +6,7 @@ import { cwd } from "process";
 import { unlinkSync } from "fs";
 import ErrorModel from "../models/error.model.js";
 import {
+  deleteProfilePic,
   getUserById,
   getUserByUsername,
   updateAbout,
@@ -71,11 +72,8 @@ userCtrl.put("/about", async (req, res, next) => {
   }
 });
 
-userCtrl.put("/img", async (req, res, next) => {
+userCtrl.put("/img/:oldImgPath", async (req, res, next) => {
   const id = req.headers.id;
-  if (req.body.oldImgPath) {
-    unlinkSync(join(cwd(), "uploads", req.body.oldImgPath));
-  }
   let newFileName;
   if (req.files) {
     const uploadedfile = req.files.profilePic;
@@ -88,13 +86,34 @@ userCtrl.put("/img", async (req, res, next) => {
     uploadedfile.mv(uploadPath, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send(err);
+        return next(500, err);
       }
     });
   }
   try {
     const update = await updateProfilePic(id, newFileName);
-    res.send(newFileName);
+    if (req.params.oldImgPath !== "null") {
+      console.log(req.params.oldImgPath);
+      unlinkSync(join(cwd(), "uploads", req.params.oldImgPath));
+    }
+    res.send({ image: newFileName });
+  } catch (error) {
+    console.log(error);
+    return next(new ErrorModel(500));
+  }
+});
+
+userCtrl.delete("/img", async (req, res, next) => {
+  const id = req.headers.id;
+
+  try {
+    const deleted = await deleteProfilePic(id);
+    if (deleted) {
+      unlinkSync(join(cwd(), "uploads", req.body.oldImgPath));
+    } else {
+      next(409);
+    }
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
     return next(new ErrorModel(500));
