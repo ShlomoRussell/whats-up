@@ -14,14 +14,19 @@ function TakePictureModal({ _show, toggleShow, onUserMediaError }) {
   const serverError = () => alert("There was an error. Please try again");
 
   const savePicture = async () => {
+    const formData = new FormData();
     try {
-      await uploadPicture({ img: picture, oldImgPath: image });
+      const base64 = await fetch(picture);
+      const blob = await base64.blob();
+      formData.append("profilePic", blob, "profilePic.jpeg");
+      await uploadPicture({ img: formData, oldImgPath: image });
+      toggleShow() || setShow(false);
     } catch (error) {
       serverError();
       console.log(error);
     }
   };
-  
+
   const capture = useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
     console.log(pictureSrc);
@@ -69,13 +74,15 @@ function TakePictureModal({ _show, toggleShow, onUserMediaError }) {
           <Image src={picture} />
         )}
         {picture !== "" ? (
-          <Button onClick={(e) => setPicture("")}>Retake</Button>
+          <>
+            <Button onClick={(e) => setPicture("")}>Retake</Button>
+            <Button onClick={savePicture}>Save</Button>
+          </>
         ) : (
           <Button variant="danger" onClick={capture}>
             Capture
           </Button>
         )}
-        <Button onClick={savePicture}>Save</Button>
       </Modal.Body>
     </Modal>
   );
